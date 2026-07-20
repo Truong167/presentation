@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feeding AI or Feeding Hackers?</title>
+    <meta name="description" content="The Unseen Security Blindspots in the Age of AI — A company-wide security awareness presentation">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #1e3a5f;
+            --primary-light: #2d5a8e;
+            --accent: #0ea5e9;
+            --danger: #dc2626;
+            --danger-light: #fef2f2;
+            --danger-border: #fecaca;
+            --warning: #f59e0b;
+            --success: #059669;
+            --success-light: #ecfdf5;
+            --success-border: #a7f3d0;
+            --text: #1e293b;
+            --text-secondary: #64748b;
+            --text-light: #94a3b8;
+            --bg-white: #ffffff;
+            --bg-light: #f8fafc;
+            --bg-dark: #0f172a;
+            --border: #e2e8f0;
+            --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.06);
+            --radius: 12px;
+            --font: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+        }
+
+        html { font-size: 16px; scroll-behavior: smooth; }
+        body {
+            font-family: var(--font);
+            color: var(--text);
+            background: var(--bg-dark);
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── Progress Bar ── */
+        .progress-track {
+            position: fixed; top: 0; left: 0; width: 100%; height: 3px;
+            background: rgba(255,255,255,0.08); z-index: 100;
+        }
+        .progress-fill {
+            height: 100%; width: 0;
+            background: linear-gradient(90deg, var(--accent), #38bdf8);
+            transition: width 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 8px rgba(14,165,233,0.4);
+        }
+
+        /* ── Slide Counter ── */
+        .slide-counter {
+            position: fixed; bottom: 28px; right: 36px; z-index: 100;
+            font-size: 0.8rem; font-weight: 600; letter-spacing: 0.05em;
+            color: rgba(255,255,255,0.35);
+            transition: color 0.5s;
+        }
+        .slide-counter.on-light { color: rgba(30,58,95,0.3); }
+
+        /* ── Navigation Hint ── */
+        .nav-hint {
+            position: fixed; bottom: 28px; left: 36px; z-index: 100;
+            font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase;
+            color: rgba(255,255,255,0.2);
+            transition: opacity 0.8s, color 0.5s;
+        }
+        .nav-hint.on-light { color: rgba(30,58,95,0.2); }
+        .nav-hint.hidden { opacity: 0; pointer-events: none; }
+
+        /* ── Slide Container ── */
+        .deck {
+            width: 100vw; height: 100vh; position: relative;
+        }
+
+        /* ── Single Slide ── */
+        .slide {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center;
+            padding: 60px 48px;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: translateY(40px) scale(0.97);
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                        transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                        visibility 0s 0.6s;
+        }
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transform: translateY(0) scale(1);
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                        transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                        visibility 0s 0s;
+        }
+        .slide.exit-up {
+            opacity: 0;
+            transform: translateY(-40px) scale(0.97);
+        }
+        .slide.exit-down {
+            opacity: 0;
+            transform: translateY(40px) scale(0.97);
+        }
+        .slide.enter-from-below {
+            transform: translateY(40px) scale(0.97);
+        }
+        .slide.enter-from-above {
+            transform: translateY(-40px) scale(0.97);
+        }
+
+        /* ── Backgrounds ── */
+        .bg-dark { background: var(--bg-dark); color: #f1f5f9; }
+        .bg-white { background: var(--bg-white); color: var(--text); }
+        .bg-light { background: var(--bg-light); color: var(--text); }
+
+        /* ── Content Wrapper ── */
+        .content { max-width: 1100px; width: 100%; }
+
+        /* ── Typography ── */
+        .label {
+            font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em;
+            text-transform: uppercase; margin-bottom: 16px;
+        }
+        .label-danger { color: var(--danger); }
+        .label-accent { color: var(--accent); }
+        .label-warning { color: var(--warning); }
+        .label-success { color: var(--success); }
+        .label-muted { color: var(--text-light); }
+        .label-blue { color: #3b82f6; }
+        .label-orange { color: #ea580c; }
+
+        h1 {
+            font-size: clamp(2.4rem, 5vw, 4rem);
+            font-weight: 800; line-height: 1.1;
+            letter-spacing: -0.02em; margin-bottom: 20px;
+        }
+        h2 {
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            font-weight: 800; line-height: 1.15;
+            letter-spacing: -0.015em; margin-bottom: 16px;
+        }
+        h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; }
+        .subtitle {
+            font-size: clamp(1rem, 1.5vw, 1.2rem);
+            color: var(--text-secondary); line-height: 1.7;
+            max-width: 640px;
+        }
+        .bg-dark .subtitle { color: #94a3b8; }
+
+        .highlight { color: var(--accent); }
+        .highlight-red { color: var(--danger); }
+        .highlight-green { color: var(--success); }
+
+        /* ── Grid ── */
+        .grid-2 {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        .grid-3 {
+            display: grid; grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+        .grid-4 {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* ── Cards ── */
+        .card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px;
+            box-shadow: var(--shadow);
+        }
+        .card-danger {
+            background: var(--danger-light);
+            border-color: var(--danger-border);
+        }
+        .card-dark {
+            background: rgba(255,255,255,0.04);
+            border-color: rgba(255,255,255,0.08);
+        }
+        .card-success {
+            background: var(--success-light);
+            border-color: var(--success-border);
+        }
+        .card p { color: var(--text-secondary); line-height: 1.65; font-size: 0.95rem; }
+        .card-dark p { color: #94a3b8; }
+        .card:has(a):hover {
+            border-color: var(--accent);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+            transition: all 0.2s ease;
+        }
+        .card a { cursor: pointer; }
+        .card-icon {
+            font-size: 1.6rem; margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        /* ── Stat Box ── */
+        .stat-number {
+            font-size: clamp(2.5rem, 4vw, 3.5rem);
+            font-weight: 800; line-height: 1; margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+        .stat-number.blue { color: #2563eb; }
+        .stat-desc { font-size: 1rem; color: var(--text-secondary); line-height: 1.5; }
+        .stat-source { font-size: 0.7rem; color: var(--text-light); margin-top: 8px; }
+
+        /* ── Comparison Table ── */
+        .compare-col { padding: 32px; border-radius: var(--radius); }
+        .compare-before {
+            background: var(--bg-white);
+            border: 2px solid var(--border);
+        }
+        .compare-after {
+            background: var(--bg-white);
+            border: 2px solid var(--danger-border);
+            position: relative; overflow: hidden;
+        }
+        .compare-after::before {
+            content: ''; position: absolute; top: 0; right: 0;
+            width: 80px; height: 80px;
+            background: var(--danger-light);
+            border-radius: 0 0 0 100%;
+        }
+        .compare-badge {
+            display: inline-block;
+            font-size: 0.65rem; font-weight: 700;
+            letter-spacing: 0.1em; text-transform: uppercase;
+            padding: 4px 12px; border-radius: 999px;
+            margin-bottom: 24px;
+        }
+        .badge-gray { background: #f1f5f9; color: #475569; }
+        .badge-red { background: #fef2f2; color: var(--danger); }
+        .compare-item { margin-bottom: 20px; }
+        .compare-item:last-child { margin-bottom: 0; }
+        .compare-item h4 { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+        .compare-item p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.55; }
+        .compare-item strong { color: var(--danger); font-weight: 700; }
+
+        /* ── Flow Diagram ── */
+        .flow {
+            display: flex; align-items: center; gap: 8px;
+            flex-wrap: nowrap;
+        }
+        .flow-step {
+            flex: 1; min-width: 0;
+            padding: 20px 16px;
+            border-radius: var(--radius);
+            text-align: center;
+        }
+        .flow-step-icon { font-size: 1.8rem; margin-bottom: 8px; }
+        .flow-step h4 { font-size: 0.8rem; font-weight: 700; margin-bottom: 4px; }
+        .flow-step p { font-size: 0.7rem; opacity: 0.6; }
+        .flow-arrow {
+            font-size: 1.2rem; color: rgba(255,255,255,0.25);
+            flex-shrink: 0;
+        }
+        .flow-step-danger {
+            background: rgba(220,38,38,0.15);
+            border: 1px solid rgba(220,38,38,0.3);
+        }
+        .flow-step-danger h4 { color: #fca5a5; }
+
+        /* ── Rule Framework ── */
+        .rule {
+            display: flex; align-items: flex-start; gap: 20px;
+            padding: 24px 28px;
+            border-radius: var(--radius);
+            margin-bottom: 16px;
+            transition: all 0.4s;
+        }
+        .rule:last-child { margin-bottom: 0; }
+        .rule-active {
+            background: var(--success-light);
+            border: 2px solid var(--success-border);
+        }
+        .rule-active .rule-num { background: var(--success); }
+        .rule-active h3 { color: #065f46; }
+        .rule-inactive {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            opacity: 0.35;
+        }
+        .rule-inactive .rule-num { background: #94a3b8; }
+        .rule-num {
+            width: 40px; height: 40px; min-width: 40px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-weight: 800; font-size: 1.1rem;
+        }
+        .rule p { color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem; }
+
+        /* ── Steps ── */
+        .step {
+            display: flex; align-items: flex-start; gap: 20px;
+            padding: 20px 24px;
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 12px;
+        }
+        .step:last-child { margin-bottom: 0; }
+        .step-num {
+            width: 36px; height: 36px; min-width: 36px;
+            border-radius: 50%;
+            background: #ea580c;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-weight: 800; font-size: 0.95rem;
+        }
+        .step p { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5; }
+
+        /* ── Two-Col Layout ── */
+        .two-col {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 48px; align-items: center;
+        }
+
+        /* ── Bounce Arrow ── */
+        .bounce-arrow {
+            position: absolute; bottom: 48px; left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s ease-in-out infinite;
+        }
+        .bounce-arrow svg {
+            width: 32px; height: 32px;
+            stroke: rgba(255,255,255,0.25);
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        /* ── Stagger Animation for children ── */
+        .slide.active .stagger > * {
+            animation: fadeUp 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+        }
+        .slide.active .stagger > *:nth-child(1) { animation-delay: 0.15s; }
+        .slide.active .stagger > *:nth-child(2) { animation-delay: 0.25s; }
+        .slide.active .stagger > *:nth-child(3) { animation-delay: 0.35s; }
+        .slide.active .stagger > *:nth-child(4) { animation-delay: 0.45s; }
+        .slide.active .stagger > *:nth-child(5) { animation-delay: 0.55s; }
+        .slide.active .stagger > *:nth-child(6) { animation-delay: 0.65s; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px) scale(0.98); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* ── Code Tag ── */
+        code {
+            font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+            font-size: 0.85em;
+            background: rgba(14,165,233,0.1);
+            color: var(--accent);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 900px) {
+            .slide { padding: 40px 24px; }
+            .grid-2, .grid-3, .grid-4, .two-col { grid-template-columns: 1fr; }
+            .flow { flex-wrap: wrap; justify-content: center; }
+            .flow-arrow.desktop-only { display: none; }
+        }
+        @media (max-width: 600px) {
+            .slide { padding: 32px 16px; }
+            .card { padding: 20px; }
+        }
+
+        /* ── Inline SVG icons ── */
+        .icon-shield, .icon-alert, .icon-check { display: inline-block; vertical-align: middle; }
+    </style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div class="progress-track">
+    <div class="progress-fill" id="progress"></div>
+</div>
+
+<!-- Slide Counter -->
+<div class="slide-counter" id="counter">1 / 12</div>
+
+<!-- Navigation Hint -->
+<div class="nav-hint" id="navHint">Use arrow keys or scroll to navigate</div>
+
+<!-- ─────────────────────────────────────────────── -->
+<!-- SLIDE DECK                                      -->
+<!-- ─────────────────────────────────────────────── -->
+<div class="deck" id="deck">
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SLIDE 1 — Title                             -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="slide bg-dark active" data-theme="dark">
+        <div class="content" style="text-align:center;">
+            <h1>Feeding AI<br>or Feeding <span class="highlight-red">Hackers</span>?</h1>
+            <p class="subtitle" style="margin:0 auto 40px; max-width:560px;">
+                The unseen security blindspots in the age of artificial intelligence.
+            </p>
+            <p style="font-size:0.8rem; color:#475569; letter-spacing:0.05em;">
+                Security Awareness — 2025
+            </p>
+        </div>
+        <div class="bounce-arrow">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SLIDE 2 — The AI Boom at Work                -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="slide bg-white" data-theme="light">
+        <div class="content">
+            <p class="label label-accent">The Reality</p>
+            <h2>AI Is Everywhere<br>in Our Workflow</h2>
+            <p class="subtitle" style="margin-bottom:36px;">
+                From drafting emails to reviewing code, every team uses AI daily. But convenience has a hidden cost.
+            </p>
+            <div class="grid-4 stagger">
+                <div class="card">
+                    <div class="card-icon">💻</div>
+                    <h3>Developers</h3>
+                    <p>Paste source code into ChatGPT for debugging, code review, or generating boilerplate.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📊</div>
+                    <h3>PM & Sales</h3>
+                    <p>Upload client data, proposals, and financial reports to AI summarizers.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📝</div>
+                    <h3>HR & Admin</h3>
+                    <p>Use AI to draft contracts, process employee records, and write policy documents.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🧩</div>
+                    <h3>Everyone</h3>
+                    <p>Install "AI-powered" browser extensions that promise productivity boosts.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SLIDE 3 — The Threat Landscape               -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="slide bg-light" data-theme="light">
+        <div class="content">
+            <p class="label label-danger">The Dark Side</p>
+            <h2>How AI Re-wrote the<br>Hacker's Playbook</h2>
+            <p class="subtitle" style="margin-bottom:36px;">
+                The same AI that boosts your productivity is also supercharging attackers.
+            </p>
+            <div class="grid-2">
+                <div class="compare-col compare-before">
+                    <span class="compare-badge badge-gray">Before AI</span>
+                    <div class="compare-item">
+                        <h4>Phishing Emails</h4>
+                        <p>Riddled with typos, broken formatting. Easily caught by spam filters or alert users.</p>
+                    </div>
+                    <div class="compare-item">
+                        <h4>Fake Websites</h4>
+                        <p>Required manual HTML/CSS skills. Took days to clone a single login page.</p>
+                    </div>
+                    <div class="compare-item">
+                        <h4>Targeting</h4>
+                        <p>Broad, generic "spray and pray" attacks with low success rates.</p>
+                    </div>
+                </div>
+                <div class="compare-col compare-after">
+                    <span class="compare-badge badge-red">With AI</span>
+                    <div class="compare-item">
+                        <h4>Phishing Emails</h4>
+                        <p>Flawless grammar, <strong>perfect corporate tone</strong>, passes every human check.</p>
+                    </div>
+                    <div class="compare-item">
+                        <h4>Fake Websites</h4>
+                        <p>AI generates <strong>99.99% accurate</strong> clones in <strong>under 60 seconds</strong>.</p>
+                    </div>
+                    <div class="compare-item">
+                        <h4>Targeting</h4>
+                        <p>Hyper-personalized spear-phishing using <strong>automated OSINT</strong> data collection.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SLIDE 4 — Case Study                         -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="slide bg-white" data-theme="light">
+        <div class="content">
+            <div class="two-col">
+                <div>
+                    <p class="label label-danger">Case Study</p>
+                    <h2>The Multi-Layered<br>AI Attack</h2>
+                    <p class="subtitle">
+                        Modern attacks don't brute-force their way in — they walk through the front door using your own voice, your own tools, and your own trust.
+                    </p>
+                </div>
+                <div class="card card-danger" style="padding:32px;">
+                    <h3 style="color:var(--danger); margin-bottom:16px; font-size:1rem;">Attack Chain</h3>
+                    <div class="stagger">
+                        <p style="color:var(--text); line-height:1.7; margin-bottom:12px;">
+                            <strong>Step 1:</strong> Hackers scraped public company data to train a targeted AI model.
+                        </p>
+                        <p style="color:var(--text); line-height:1.7; margin-bottom:12px;">
+                            <strong>Step 2:</strong> Used <strong style="color:var(--danger)">AI voice cloning</strong> to impersonate an executive on a phone call, bypassing HR verification.
+                        </p>
+                        <p style="color:var(--text); line-height:1.7; margin-bottom:12px;">
+                            <strong>Step 3:</strong> A rogue browser extension masked as an <em>"AI Smart Summary Tool"</em> silently captured session tokens.
+                        </p>
+                        <p style="color:var(--text); line-height:1.7;">
+                            <strong>Result:</strong> <code>document.cookie</code> exfiltrated — <strong style="color:var(--danger)">2FA completely bypassed</strong>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SLIDE 5 — Everyday AI Traps                   -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="slide bg-light" data-theme="light">
+        <div class="content">
+            <p class="label label-warning">Hidden Risks</p>
+            <h2>Everyday AI Traps<br>You Don't See Coming</h2>
+            <p class="subtitle" style="margin-bottom:36px;">
+                These aren't hypothetical. These happen in offices every single day.
+            </p>
+            <div class="grid-4 stagger">
+                <div class="card">
+                    <div class="card-icon">🔓</div>
+                    <h3>Pasting Source Code</h3>
+                    <p>Internal logic, API keys, and business rules become part of external training data — permanently outside your control.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📤</div>
+                    <h3>Uploading Documents</h3>
+                    <p>Confidential reports and contracts are transmitted to third-party servers with unknown data retention policies.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🧩</div>
+                    <h3>Rogue Extensions</h3>
+                    <p>Extensions requesting "Read all site data" can silently capture sessions, passwords, and internal dashboards.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">✉️</div>
+                    <h3>AI Email Drafts</h3>
+                    <p>Client PII and deal terms are sent to external AI servers the moment you ask it to "improve the tone."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SLIDE 6 — Data Flow                           -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="slide bg-dark" data-theme="dark">
+        <div class="content">
+            <p class="label label-accent">Data Flow</p>
+            <h2>Where Does Your Data<br>Actually Go?</h2>
+            <p class="subtitle" style="margin-bottom:48px;">
+                Once you press "Send", you lose control. Here's the invisible pipeline.
+            </p>
+            <div class="flow">
+                <div class="flow-step card-dark" style="border:1px solid rgba(255,255,255,0.08); border-radius:var(--radius);">
+                    <div class="flow-step-icon">👤</div>
+                    <h4>Employee</h4>
+                    <p>Pastes code, uploads docs</p>
+                </div>
+                <div class="flow-arrow desktop-only">→</div>
+                <div class="flow-step card-dark" style="border:1px solid rgba(255,255,255,0.08); border-radius:var(--radius);">
+                    <div class="flow-step-icon">🤖</div>
+                    <h4>Public AI</h4>
+                    <p>ChatGPT, Gemini, etc.</p>
+                </div>
+                <div class="flow-arrow desktop-only">→</div>
+                <div class="flow-step card-dark" style="border:1px solid rgba(255,255,255,0.08); border-radius:var(--radius);">
+                    <div class="flow-step-icon">🧠</div>
+                    <h4>Model Training</h4>
+                    <p>Data retained & learned</p>
+                </div>
+                <div class="flow-arrow desktop-only">→</div>
+                <div class="flow-step card-dark" style="border:1px solid rgba(255,255,255,0.08); border-radius:var(--radius);">
+                    <div class="flow-step-icon">🌐</div>
+                    <h4>Exposure</h4>
+                    <p>Surfaced in other queries</p>
+                </div>
+                <div class="flow-arrow desktop-only">→</div>
+                <div class="flow-step flow-step-danger" style="border-radius:var(--radius);">
+                    <div class="flow-step-icon">☠️</div>
+                    <h4>Attackers</h4>
+                    <p>Exploit leaked data</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SLIDE 7 — Statistics                          -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="slide bg-white" data-theme="light">
+        <div class="content">
+            <p class="label label-blue">By The Numbers</p>
+            <h2>The Numbers Don't Lie</h2>
+            <p class="subtitle" style="margin-bottom:36px;">
+                AI-driven threats are growing at an unprecedented pace.
+            </p>
+            <div class="grid-4 stagger">
+                <div class="card" style="background:#eff6ff; border-color:#bfdbfe;">
+                    <p class="stat-number blue">1,265%</p>
+                    <p class="stat-desc">increase in phishing emails since ChatGPT launched</p>
+                    <p class="stat-source">Source: SlashNext Report</p>
+                </div>
+                <div class="card" style="background:#eff6ff; border-color:#bfdbfe;">
+                    <p class="stat-number blue">$4.88M</p>
+                    <p class="stat-desc">average cost of a single data breach in 2024</p>
+                    <p class="stat-source">Source: IBM Security Report</p>
+                </div>
+                <div class="card" style="background:#eff6ff; border-color:#bfdbfe;">
+                    <p class="stat-number blue">&lt; 60s</p>
+                    <p class="stat-desc">to clone a corporate login page using generative AI</p>
+                </div>
+                <div class="card" style="background:#eff6ff; border-color:#bfdbfe;">
+                    <p class="stat-number blue">75%</p>
+                    <p class="stat-desc">of knowledge workers use AI at work — 78% without employer approval</p>
+                    <p class="stat-source">Source: Microsoft & LinkedIn Work Trend Index 2024</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SLIDE 8 — The "3 NOs" Framework               -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="slide bg-white" data-theme="light">
+        <div class="content" style="max-width:800px;">
+            <p class="label label-success">Defense Framework</p>
+            <h2>The "3 NOs" Framework</h2>
+            <p class="subtitle" style="margin-bottom:36px;">
+                Three simple rules to protect yourself and the company.
+            </p>
+            <div class="stagger">
+                <div class="rule rule-active">
+                    <div class="rule-num">1</div>
+                    <div>
+                        <h3>NO Sensitive Data Pasting</h3>
+                        <p>Never input client PII, source code, API keys, or financial data into public AI tools. Once submitted, you lose all control.</p>
+                    </div>
+                </div>
+                <div class="rule rule-active">
+                    <div class="rule-num">2</div>
+                    <div>
+                        <h3>NO Unverified Extensions</h3>
+                        <p>Treat browser plugins as unvetted software. Only install company-approved extensions. One rogue extension can bypass every security layer.</p>
+                    </div>
+                </div>
+                <div class="rule rule-active">
+                    <div class="rule-num">3</div>
+                    <div>
+                        <h3>NO Blind Trust</h3>
+                        <p>Always verify the domain URL (<code>https://...</code>) before entering credentials. AI clones the UI perfectly, but cannot spoof real domains.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SLIDE 9 — Practical Tips                      -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="slide bg-light" data-theme="light">
+        <div class="content">
+            <p class="label label-success">Practical Tips</p>
+            <h2>Safe AI Usage<br>Checklist</h2>
+            <p class="subtitle" style="margin-bottom:36px;">
+                Use AI productively without putting the company at risk.
+            </p>
+            <div class="grid-2 stagger">
+                <div class="card card-success" style="padding:24px 28px;">
+                    <h3 style="color:var(--success); margin-bottom:12px;">Do This ✓</h3>
+                    <ul style="list-style:none; padding:0;">
+                        <li style="padding:8px 0; border-bottom:1px solid #d1fae5; color:var(--text-secondary); font-size:0.95rem;">Use company-approved AI tools with enterprise agreements</li>
+                        <li style="padding:8px 0; border-bottom:1px solid #d1fae5; color:var(--text-secondary); font-size:0.95rem;">Anonymize data before pasting into any AI</li>
+                        <li style="padding:8px 0; border-bottom:1px solid #d1fae5; color:var(--text-secondary); font-size:0.95rem;">Review extension permissions before installing</li>
+                        <li style="padding:8px 0; border-bottom:1px solid #d1fae5; color:var(--text-secondary); font-size:0.95rem;">Check URLs character by character on login pages</li>
+                        <li style="padding:8px 0; color:var(--text-secondary); font-size:0.95rem;">Report suspicious extensions or emails to IT Security</li>
+                    </ul>
+                </div>
+                <div class="card card-danger" style="padding:24px 28px;">
+                    <h3 style="color:var(--danger); margin-bottom:12px;">Avoid This ✗</h3>
+                    <ul style="list-style:none; padding:0;">
+                        <li style="padding:8px 0; border-bottom:1px solid #fecaca; color:var(--text-secondary); font-size:0.95rem;">Pasting client contracts, credentials, or source code</li>
+                        <li style="padding:8px 0; border-bottom:1px solid #fecaca; color:var(--text-secondary); font-size:0.95rem;">Installing browser extensions without IT approval</li>
+                        <li style="padding:8px 0; border-bottom:1px solid #fecaca; color:var(--text-secondary); font-size:0.95rem;">Clicking "Login" on pages from email links</li>
+                        <li style="padding:8px 0; border-bottom:1px solid #fecaca; color:var(--text-secondary); font-size:0.95rem;">Using personal AI accounts for company work</li>
+                        <li style="padding:8px 0; color:var(--text-secondary); font-size:0.95rem;">Granting "Read all site data" to any extension</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SLIDE 10 — Incident Response                  -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="slide bg-white" data-theme="light">
+        <div class="content" style="max-width:800px;">
+            <p class="label label-orange">Incident Response</p>
+            <h2>Compromised?<br>Act Fast.</h2>
+            <p class="subtitle" style="margin-bottom:36px;">
+                Speed is critical. Follow these steps immediately.
+            </p>
+            <div class="stagger">
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <div>
+                        <h3>Report Immediately</h3>
+                        <p>Contact the IT Security team right away. Every minute counts to contain the breach.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <div>
+                        <h3>Change All Passwords</h3>
+                        <p>Reset credentials and revoke all active sessions across every affected platform.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">3</div>
+                    <div>
+                        <h3>Remove Suspicious Extensions</h3>
+                        <p>Uninstall any browser extension you didn't explicitly approve or that IT hasn't vetted.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">4</div>
+                    <div>
+                        <h3>Document the Exposure</h3>
+                        <p>Record what data may have been compromised — files, credentials, client information.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">5</div>
+                    <div>
+                        <h3>Follow Company IR Procedures</h3>
+                        <p>Adhere to the established incident response protocol for proper handling and recovery.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SLIDE 11 — References                         -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="slide bg-light" data-theme="light">
+        <div class="content" style="max-width:860px;">
+            <p class="label label-muted">References</p>
+            <h2>Sources & Further Reading</h2>
+            <p class="subtitle" style="margin-bottom:36px;">
+                Data and claims in this presentation are based on the following reports and research.
+            </p>
+            <div class="stagger">
+                <div class="card" style="margin-bottom:16px; padding:20px 28px;">
+                    <a href="https://slashnext.com/press-release/slashnexts-2023-state-of-phishing-report-reveals-a-1265-increase-in-phishing-emails-since-the-launch-of-chatgpt-in-november-2022-signaling-a-new-era-of-cybercrime-fueled-by-generative-ai/" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:inherit; display:block;">
+                        <h3 style="margin-bottom:4px; color:var(--primary-light);">SlashNext — "The State of Phishing" Report (2023) ↗</h3>
+                        <p style="margin-bottom:4px;">1,265% increase in phishing emails since the launch of ChatGPT in November 2022.</p>
+                        <p style="font-size:0.8rem; color:var(--text-light);">slashnext.com — Press Release, October 2023</p>
+                    </a>
+                </div>
+                <div class="card" style="margin-bottom:16px; padding:20px 28px;">
+                    <a href="https://newsroom.ibm.com/2024-07-30-ibm-report-escalating-data-breach-disruption-pushes-costs-to-new-highs" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:inherit; display:block;">
+                        <h3 style="margin-bottom:4px; color:var(--primary-light);">IBM — "Cost of a Data Breach" Report (2024) ↗</h3>
+                        <p style="margin-bottom:4px;">Global average cost of a data breach reached $4.88 million — a 10% year-over-year increase.</p>
+                        <p style="font-size:0.8rem; color:var(--text-light);">newsroom.ibm.com — Published July 30, 2024 (Ponemon Institute research)</p>
+                    </a>
+                </div>
+                <div class="card" style="margin-bottom:16px; padding:20px 28px;">
+                    <a href="https://www.microsoft.com/en-us/worklab/11-unexpected-ai-at-work-insights-from-2024" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:inherit; display:block;">
+                        <h3 style="margin-bottom:4px; color:var(--primary-light);">Microsoft & LinkedIn — Work Trend Index (2024) ↗</h3>
+                        <p style="margin-bottom:4px;">75% of knowledge workers use AI at work; 78% bring their own AI tools without employer approval.</p>
+                        <p style="font-size:0.8rem; color:var(--text-light);">microsoft.com/worklab — 2024 Annual Work Trend Index</p>
+                    </a>
+                </div>
+                <div class="card" style="margin-bottom:16px; padding:20px 28px;">
+                    <a href="https://www.cnn.com/2024/05/16/tech/arup-deepfake-scam-loss-hong-kong-intl-hnk" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:inherit; display:block;">
+                        <h3 style="margin-bottom:4px; color:var(--primary-light);">CNN — Arup $25M Deepfake Video Call Fraud (2024) ↗</h3>
+                        <p style="margin-bottom:4px;">AI deepfake video call impersonated multiple executives, tricking an employee into transferring $25 million.</p>
+                        <p style="font-size:0.8rem; color:var(--text-light);">cnn.com — Reported May 2024, Hong Kong</p>
+                    </a>
+                </div>
+                <div class="card" style="padding:20px 28px;">
+                    <a href="https://cheatsheetseries.owasp.org/cheatsheets/Browser_Extension_Vulnerabilities_Cheat_Sheet.html" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:inherit; display:block;">
+                        <h3 style="margin-bottom:4px; color:var(--primary-light);">OWASP — Browser Extension Vulnerabilities Cheat Sheet ↗</h3>
+                        <p style="margin-bottom:4px;">Risks of rogue browser extensions: session token theft, credential harvesting, and data exfiltration.</p>
+                        <p style="font-size:0.8rem; color:var(--text-light);">cheatsheetseries.owasp.org — OWASP Cheat Sheet Series</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SLIDE 12 — Conclusion                         -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="slide bg-dark" data-theme="dark">
+        <div class="content" style="text-align:center;">
+            <p class="label label-accent">Key Takeaway</p>
+            <h2 style="max-width:700px; margin:0 auto 32px;">
+                Leverage AI for efficiency,<br>but stay <span class="highlight">vigilant</span> to<br>safeguard our data.
+            </h2>
+            <div style="width:64px; height:2px; background:#1e293b; margin:0 auto 32px; opacity:0.3;"></div>
+            <p style="font-size:1.15rem; color:#64748b;">Thank you for listening!</p>
+            <p style="font-size:0.85rem; color:#334155; margin-top:40px; letter-spacing:0.05em;">
+                Q&A — Let's discuss
+            </p>
+        </div>
+    </section>
+
+</div>
+
+<!-- ─────────────────────────────────────────────── -->
+<!-- JavaScript — Navigation & Progress              -->
+<!-- ─────────────────────────────────────────────── -->
+<script>
+(function() {
+    var slides = document.querySelectorAll('.slide');
+    var progress = document.getElementById('progress');
+    var counter = document.getElementById('counter');
+    var navHint = document.getElementById('navHint');
+    var current = 0;
+    var total = slides.length;
+    var locked = false;
+
+    function goTo(index) {
+        if (index < 0 || index >= total || index === current || locked) return;
+        locked = true;
+
+        var direction = index > current ? 'down' : 'up';
+        var outgoing = slides[current];
+        var incoming = slides[index];
+
+        // Set exit direction on outgoing slide
+        outgoing.classList.add(direction === 'down' ? 'exit-up' : 'exit-down');
+        outgoing.classList.remove('active');
+
+        // Prepare incoming slide entry position (no transition yet)
+        incoming.style.transition = 'none';
+        incoming.classList.add(direction === 'down' ? 'enter-from-below' : 'enter-from-above');
+
+        // Force reflow then animate in
+        void incoming.offsetHeight;
+        incoming.style.transition = '';
+        incoming.classList.remove('enter-from-below', 'enter-from-above');
+        incoming.classList.add('active');
+
+        // Clean up outgoing after transition
+        setTimeout(function() {
+            outgoing.classList.remove('exit-up', 'exit-down');
+        }, 650);
+
+        current = index;
+
+        var pct = total > 1 ? (current / (total - 1)) * 100 : 0;
+        progress.style.width = pct + '%';
+        counter.textContent = (current + 1) + ' / ' + total;
+
+        var isLight = slides[current].getAttribute('data-theme') === 'light';
+        counter.className = 'slide-counter' + (isLight ? ' on-light' : '');
+        navHint.className = 'nav-hint' + (isLight ? ' on-light' : '') + (current > 0 ? ' hidden' : '');
+
+        setTimeout(function() { locked = false; }, 650);
+    }
+
+    function next() { goTo(current + 1); }
+    function prev() { goTo(current - 1); }
+
+    // Keyboard
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+            e.preventDefault(); next();
+        } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'PageUp') {
+            e.preventDefault(); prev();
+        } else if (e.key === 'Home') {
+            e.preventDefault(); update(0, 'up');
+        } else if (e.key === 'End') {
+            e.preventDefault(); update(total - 1, 'down');
+        }
+    });
+
+    // Scroll / Wheel — accumulate small trackpad deltas
+    var wheelAccum = 0;
+    var wheelTimer = null;
+    document.addEventListener('wheel', function(e) {
+        e.preventDefault();
+        wheelAccum += e.deltaY;
+        if (wheelTimer) return;
+        wheelTimer = setTimeout(function() {
+            if (wheelAccum > 15) next();
+            else if (wheelAccum < -15) prev();
+            wheelAccum = 0;
+            wheelTimer = null;
+        }, 80);
+    }, { passive: false });
+
+    // Touch swipe
+    var touchStartY = 0;
+    document.addEventListener('touchstart', function(e) {
+        touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+    document.addEventListener('touchend', function(e) {
+        var diff = touchStartY - e.changedTouches[0].screenY;
+        if (Math.abs(diff) > 40) {
+            if (diff > 0) next(); else prev();
+        }
+    }, { passive: true });
+
+    // Click navigation — left half = prev, right half = next
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('a[href], button, input')) return;
+        if (e.clientX < window.innerWidth / 2) prev();
+        else next();
+    });
+
+    // Hide hint after first navigation
+    hintTimeout = setTimeout(function() {
+        navHint.classList.add('hidden');
+    }, 6000);
+
+    // Init first slide
+    slides[0].classList.add('active');
+})();
+</script>
+
+</body>
+</html>
