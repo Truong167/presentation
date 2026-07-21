@@ -382,6 +382,532 @@
 
         /* ── Inline SVG icons ── */
         .icon-shield, .icon-alert, .icon-check { display: inline-block; vertical-align: middle; }
+
+        /* ── Heist Demo Slide ── */
+        .heist-stage {
+            position: relative;
+            height: 580px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+        .heist-phase {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            pointer-events: none;
+        }
+        .heist-phase.phase-active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .heist-phase.phase-exit {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        /* Email Mockup */
+        .email-frame {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            max-width: 720px;
+            margin: 0 auto;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+        .email-toolbar {
+            background: rgba(255,255,255,0.06);
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+        .email-meta {
+            padding: 16px 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            font-size: 0.85rem;
+            color: #94a3b8;
+            line-height: 1.9;
+        }
+        .email-meta strong { color: #e2e8f0; }
+        .email-auth-badges { margin-top: 6px; }
+        .email-auth-badges span {
+            display: inline-block;
+            background: rgba(5,150,105,0.15);
+            color: var(--success);
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 999px;
+            margin-right: 6px;
+        }
+        .email-body {
+            padding: 32px 28px;
+            text-align: center;
+        }
+        .email-body .email-warning-icon { font-size: 2.2rem; margin-bottom: 10px; }
+        .email-body h4 { color: #f59e0b; font-size: 1.05rem; margin-bottom: 14px; }
+        .email-body p { color: #94a3b8; font-size: 0.92rem; line-height: 1.65; margin-bottom: 20px; }
+        .email-cta {
+            display: inline-block;
+            background: var(--danger);
+            color: white;
+            padding: 12px 32px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        /* Browser Mockup */
+        .browser-frame {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            max-width: 540px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        .browser-chrome {
+            background: rgba(255,255,255,0.06);
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .browser-dots { display: flex; gap: 5px; }
+        .browser-dots span { width: 10px; height: 10px; border-radius: 50%; }
+        .browser-dots span:nth-child(1) { background: #ef4444; }
+        .browser-dots span:nth-child(2) { background: #f59e0b; }
+        .browser-dots span:nth-child(3) { background: #22c55e; }
+        .browser-url {
+            flex: 1;
+            background: rgba(0,0,0,0.3);
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+            font-size: 0.78rem;
+            color: #94a3b8;
+        }
+        .browser-url .url-danger { color: var(--danger); font-weight: 700; }
+        .browser-body { padding: 32px 28px; text-align: center; }
+        .browser-body .npm-logo { font-size: 1.3rem; font-weight: 800; color: #cb3837; margin-bottom: 20px; }
+        .mock-input {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            padding: 10px 14px;
+            margin-bottom: 10px;
+            text-align: left;
+            font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+            font-size: 0.82rem;
+            color: #e2e8f0;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+        }
+        .mock-input .input-label {
+            color: #64748b;
+            margin-right: 8px;
+            font-size: 0.75rem;
+            min-width: 75px;
+            text-align: right;
+        }
+        .mock-input .typing-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1em;
+            background: var(--accent);
+            margin-left: 1px;
+            animation: heist-blink 0.7s step-end infinite;
+        }
+        .browser-signin {
+            display: inline-block;
+            background: #cb3837;
+            color: white;
+            padding: 10px 36px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-top: 12px;
+        }
+        .credential-alert {
+            margin-top: 16px;
+            background: rgba(220,38,38,0.1);
+            border: 1px solid rgba(220,38,38,0.3);
+            border-radius: 6px;
+            padding: 10px 14px;
+            font-size: 0.78rem;
+            color: #fca5a5;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .credential-alert.visible { opacity: 1; }
+
+        /* Terminal Mockup */
+        .terminal-frame {
+            background: #0c0c0c;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            max-width: 760px;
+            margin: 0 auto;
+            font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+            font-size: 0.82rem;
+            text-align: left;
+        }
+        .terminal-titlebar {
+            background: rgba(255,255,255,0.06);
+            padding: 8px 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .terminal-titlebar .dots { display: flex; gap: 5px; }
+        .terminal-titlebar .dots span { width: 10px; height: 10px; border-radius: 50%; }
+        .terminal-titlebar .dots span:nth-child(1) { background: #ef4444; }
+        .terminal-titlebar .dots span:nth-child(2) { background: #f59e0b; }
+        .terminal-titlebar .dots span:nth-child(3) { background: #22c55e; }
+        .terminal-titlebar .title-text { font-size: 0.72rem; color: #64748b; margin-left: 8px; }
+        .terminal-body {
+            padding: 20px 24px;
+            line-height: 1.8;
+            color: #d4d4d4;
+            min-height: 240px;
+        }
+        .terminal-line {
+            display: block;
+            opacity: 0;
+            transform: translateY(4px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        .terminal-line.visible { opacity: 1; transform: translateY(0); }
+        .terminal-line .prompt { color: var(--success); }
+        .terminal-line .pkg-name { color: var(--accent); }
+        .terminal-line .timestamp { color: #64748b; float: right; }
+        .terminal-line .success-mark { color: var(--success); }
+        .terminal-line .ellipsis { color: #64748b; font-style: italic; }
+
+        /* Split View */
+        .heist-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            align-content: start;
+            text-align: left;
+        }
+        .heist-split-panel {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            padding: 20px 24px;
+            border-top: 3px solid transparent;
+        }
+        .heist-split-panel.panel-safe { border-top-color: var(--success); }
+        .heist-split-panel.panel-danger { border-top-color: var(--danger); }
+        .heist-split-panel h4 {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 12px;
+        }
+        .heist-split-panel.panel-safe h4 { color: var(--success); }
+        .heist-split-panel.panel-danger h4 { color: #fca5a5; }
+        .heist-split-panel pre {
+            font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+            font-size: 0.78rem;
+            color: #d4d4d4;
+            line-height: 1.65;
+            white-space: pre-wrap;
+            margin: 0;
+        }
+        .heist-split-panel .code-danger { color: #fca5a5; }
+        .heist-split-panel .code-warning { color: #fbbf24; }
+        .heist-split-panel pre .terminal-line { white-space: pre-wrap; }
+
+        /* Impact Stats */
+        .heist-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        .heist-stat {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            padding: 24px 16px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .heist-stat.visible { opacity: 1; transform: translateY(0); }
+        .heist-stat .stat-val {
+            font-size: clamp(1.8rem, 3vw, 2.4rem);
+            font-weight: 800;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+        .heist-stat .stat-label { font-size: 0.78rem; color: #94a3b8; line-height: 1.4; }
+        .heist-stat.stat-danger .stat-val { color: var(--danger); }
+        .heist-quote {
+            text-align: center;
+            padding: 16px;
+            font-style: italic;
+            color: #64748b;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .heist-quote.visible { opacity: 1; }
+        .heist-quote .quote-attr {
+            display: block;
+            margin-top: 6px;
+            font-style: normal;
+            font-size: 0.75rem;
+            color: #475569;
+        }
+
+        /* Controls */
+        .heist-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+        .heist-dots { display: flex; gap: 8px; }
+        .heist-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            transition: background 0.3s, transform 0.3s;
+        }
+        .heist-dot.dot-active { background: var(--accent); transform: scale(1.3); }
+        .heist-dot.dot-done { background: rgba(14,165,233,0.4); }
+        .heist-replay {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #94a3b8;
+            padding: 6px 18px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+        .heist-replay:hover { background: rgba(255,255,255,0.12); color: #e2e8f0; }
+
+        @keyframes heist-blink { 50% { opacity: 0; } }
+
+        /* ── Deepfake Slide Animations ── */
+        .df-anim {
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity 0.45s ease, transform 0.45s ease;
+        }
+        .df-anim.df-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .df-anim-scale {
+            opacity: 0;
+            transform: scale(0.7);
+            transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .df-anim-scale.df-visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        @keyframes df-pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(14,165,233,0.4); }
+            50% { box-shadow: 0 0 20px 6px rgba(14,165,233,0.25); }
+        }
+        .df-processing {
+            animation: df-pulse 1.5s ease-in-out infinite;
+        }
+        @keyframes df-rec-blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        .df-rec-blink {
+            animation: df-rec-blink 1s ease-in-out infinite;
+        }
+        .df-chat-type {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid #fca5a5;
+            width: 0;
+            animation: df-type-expand 2s steps(60, end) forwards, heist-blink 0.7s step-end 3s infinite;
+        }
+        @keyframes df-type-expand {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        .df-arrow-anim {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .df-arrow-anim.df-visible {
+            opacity: 1;
+        }
+        @keyframes df-pulse-dot {
+            0%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(1.8); }
+        }
+
+        /* ── Data Flow Split-Screen ── */
+        .df-stage { margin-bottom: 16px; }
+        .df-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            align-items: start;
+        }
+        .df-panel {
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.03);
+            transition: opacity 0.5s;
+        }
+        .df-panel.df-dimmed { opacity: 0.4; }
+        .df-panel-label {
+            padding: 8px 16px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .df-label-safe { color: var(--success); background: rgba(5,150,105,0.08); }
+        .df-label-danger { color: #fca5a5; background: rgba(220,38,38,0.08); }
+
+        /* Chat UI */
+        .df-chat-bar {
+            padding: 8px 14px;
+            background: rgba(255,255,255,0.04);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            align-items: center;
+        }
+        .df-chat-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+        .df-chat-body { padding: 14px; min-height: 320px; }
+        .df-msg { margin-bottom: 12px; }
+        .df-msg:last-child { margin-bottom: 0; }
+        .df-msg-tag {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-bottom: 4px;
+            background: rgba(14,165,233,0.12);
+            color: var(--accent);
+        }
+        .df-msg-user .df-msg-tag { background: rgba(14,165,233,0.12); color: var(--accent); }
+        .df-msg-ai .df-msg-tag { background: rgba(5,150,105,0.12); color: var(--success); }
+        .df-msg p { color: #c8d0da; font-size: 0.82rem; line-height: 1.55; margin: 0; }
+        .df-code {
+            font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+            font-size: 0.75rem;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 6px;
+            padding: 10px 12px;
+            margin-top: 6px;
+            color: #d4d4d4;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            display: block;
+            overflow-x: auto;
+        }
+        .df-sensitive { color: #fca5a5; font-weight: 700; }
+
+        /* Behind The Scenes */
+        .df-bts { padding: 14px; min-height: 320px; }
+        .df-bts-block { margin-bottom: 14px; }
+        .df-bts-block:last-child { margin-bottom: 0; }
+        .df-bts-header {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #f59e0b;
+            margin-bottom: 8px;
+        }
+        .df-log {
+            font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+            font-size: 0.72rem;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 6px;
+            padding: 10px 12px;
+            color: #a3b1c4;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            display: block;
+        }
+        .df-log-lines { font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace; font-size: 0.75rem; }
+        .df-log-line {
+            color: #a3b1c4;
+            padding: 4px 0;
+            opacity: 0;
+            transform: translateX(12px);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+        .df-log-line.df-line-visible { opacity: 1; transform: translateX(0); }
+        .df-exposure { font-size: 0.82rem; }
+        .df-exp-chat { padding: 8px 12px; background: rgba(0,0,0,0.3); border-radius: 6px; }
+        .df-verdict {
+            margin-top: 12px;
+            text-align: center;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #fca5a5;
+            padding: 10px;
+            background: rgba(220,38,38,0.1);
+            border: 1px solid rgba(220,38,38,0.25);
+            border-radius: 6px;
+        }
+
+        /* Reveal */
+        .df-reveal {
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity 0.45s ease, transform 0.45s ease;
+        }
+        .df-reveal.df-shown {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 900px) {
+            .df-split { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 900px) {
+            .heist-stage { height: auto; min-height: 360px; }
+            .heist-split { grid-template-columns: 1fr; }
+            .heist-stats { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 600px) {
+            .heist-stats { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -392,7 +918,7 @@
 </div>
 
 <!-- Slide Counter -->
-<div class="slide-counter" id="counter">1 / 12</div>
+<div class="slide-counter" id="counter">1 / 10</div>
 
 <!-- Navigation Hint -->
 <div class="nav-hint" id="navHint">Use arrow keys or scroll to navigate</div>
@@ -408,11 +934,14 @@
     <section class="slide bg-dark active" data-theme="dark">
         <div class="content" style="text-align:center;">
             <h1>Feeding AI<br>or Feeding <span class="highlight-red">Hackers</span>?</h1>
-            <p class="subtitle" style="margin:0 auto 40px; max-width:560px;">
-                The unseen security blindspots in the age of artificial intelligence.
+            <p class="subtitle" style="margin:0 auto 20px; max-width:600px;">
+                AI is everywhere now. We use it every day at work.
+            </p>
+            <p class="subtitle" style="margin:0 auto 40px; max-width:600px;">
+                But as AI grows, so do the security risks. Let's talk about how to stay safe.
             </p>
             <p style="font-size:0.8rem; color:#475569; letter-spacing:0.05em;">
-                Security Awareness — 2025
+                Security Awareness — 2026
             </p>
         </div>
         <div class="bounce-arrow">
@@ -491,7 +1020,7 @@
                     </div>
                     <div class="compare-item">
                         <h4>Fake Websites</h4>
-                        <p>AI generates <strong>99.99% accurate</strong> clones in <strong>under 60 seconds</strong>.</p>
+                        <p>AI generates <strong>99.99% accurate</strong> clones in <strong>just a few minutes</strong>.</p>
                     </div>
                     <div class="compare-item">
                         <h4>Targeting</h4>
@@ -503,35 +1032,194 @@
     </section>
 
     <!-- ═══════════════════════════════════════════ -->
-    <!-- SLIDE 4 — Case Study                         -->
+    <!-- SLIDE 4 — Arup Deepfake Case Study          -->
     <!-- ═══════════════════════════════════════════ -->
-    <section class="slide bg-white" data-theme="light">
-        <div class="content">
-            <div class="two-col">
-                <div>
-                    <p class="label label-danger">Case Study</p>
-                    <h2>The Multi-Layered<br>AI Attack</h2>
-                    <p class="subtitle">
-                        Modern attacks don't brute-force their way in — they walk through the front door using your own voice, your own tools, and your own trust.
-                    </p>
-                </div>
-                <div class="card card-danger" style="padding:32px;">
-                    <h3 style="color:var(--danger); margin-bottom:16px; font-size:1rem;">Attack Chain</h3>
-                    <div class="stagger">
-                        <p style="color:var(--text); line-height:1.7; margin-bottom:12px;">
-                            <strong>Step 1:</strong> Hackers scraped public company data to train a targeted AI model.
-                        </p>
-                        <p style="color:var(--text); line-height:1.7; margin-bottom:12px;">
-                            <strong>Step 2:</strong> Used <strong style="color:var(--danger)">AI voice cloning</strong> to impersonate an executive on a phone call, bypassing HR verification.
-                        </p>
-                        <p style="color:var(--text); line-height:1.7; margin-bottom:12px;">
-                            <strong>Step 3:</strong> A rogue browser extension masked as an <em>"AI Smart Summary Tool"</em> silently captured session tokens.
-                        </p>
-                        <p style="color:var(--text); line-height:1.7;">
-                            <strong>Result:</strong> <code>document.cookie</code> exfiltrated — <strong style="color:var(--danger)">2FA completely bypassed</strong>.
-                        </p>
+    <section class="slide bg-dark" data-theme="dark" id="slide-heist">
+        <div class="content" style="max-width:940px; text-align:center;">
+            <p class="label label-danger">REAL CASE STUDY</p>
+            <h2 style="margin-bottom:4px;">The $25 Million Deepfake Call</h2>
+            <p style="font-size:0.85rem; color:#64748b; margin-bottom:20px;">
+                January 2024 — Arup, Hong Kong
+            </p>
+
+            <div class="heist-stage" id="heistStage">
+
+                <!-- Phase 1: Recon + AI (compact) -->
+                <div class="heist-phase" data-phase="1">
+                    <div style="max-width:800px; margin:0 auto;">
+                        <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:28px 32px; text-align:left;">
+                            <div style="display:flex; align-items:center; gap:10px; margin-bottom:24px;">
+                                <span style="font-size:0.72rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#fca5a5;">PHASE 1</span>
+                                <span style="flex:1; height:1px; background:rgba(255,255,255,0.08);"></span>
+                                <span style="font-size:0.72rem; color:#64748b;">Preparation</span>
+                            </div>
+                            <!-- Step row -->
+                            <div style="display:flex; align-items:stretch; gap:0; margin-bottom:24px;">
+                                <div class="df-anim" data-anim="prep" style="flex:1; padding:16px; background:rgba(0,0,0,0.25); border-radius:8px 0 0 8px; border:1px solid rgba(255,255,255,0.06); text-align:center;">
+                                    <div style="font-size:1.4rem; margin-bottom:6px;">&#127909;</div>
+                                    <div style="font-size:0.78rem; color:#e2e8f0; font-weight:700;">Collect</div>
+                                    <div style="font-size:0.68rem; color:#64748b; margin-top:2px;">YouTube, LinkedIn, interviews</div>
+                                    <div class="df-anim" data-anim="prep-ok" style="margin-top:8px; font-size:0.65rem; font-weight:700; color:var(--success); letter-spacing:0.05em;">&#10003; DONE</div>
+                                </div>
+                                <div class="df-arrow-anim" data-anim="prep-arrow" style="display:flex; align-items:center; padding:0 2px; color:rgba(255,255,255,0.2); font-size:1.2rem;">&#9654;</div>
+                                <div class="df-anim" data-anim="prep" style="flex:1; padding:16px; background:rgba(14,165,233,0.08); border:1px solid rgba(14,165,233,0.2); text-align:center;" id="aiModelBox">
+                                    <div style="font-size:1.4rem; margin-bottom:6px;">&#129302;</div>
+                                    <div style="font-size:0.78rem; color:var(--accent); font-weight:700;">AI Clone</div>
+                                    <div style="font-size:0.68rem; color:#64748b; margin-top:2px;">Face swap + voice clone</div>
+                                    <div class="df-anim" data-anim="prep-ok" style="margin-top:8px; font-size:0.65rem; font-weight:700; color:var(--accent); letter-spacing:0.05em;" id="aiStatus">&#9881; TRAINING...</div>
+                                </div>
+                                <div class="df-arrow-anim" data-anim="prep-arrow" style="display:flex; align-items:center; padding:0 2px; color:rgba(255,255,255,0.2); font-size:1.2rem;">&#9654;</div>
+                                <div class="df-anim" data-anim="prep" style="flex:1; padding:16px; background:rgba(220,38,38,0.08); border-radius:0 8px 8px 0; border:1px solid rgba(220,38,38,0.2); text-align:center;">
+                                    <div style="font-size:1.4rem; margin-bottom:6px;">&#127917;</div>
+                                    <div style="font-size:0.78rem; color:#fca5a5; font-weight:700;">Deepfake</div>
+                                    <div style="font-size:0.68rem; color:#64748b; margin-top:2px;">Real-time video ready</div>
+                                    <div class="df-anim" data-anim="prep-ok" style="margin-top:8px; font-size:0.65rem; font-weight:700; color:#fca5a5; letter-spacing:0.05em;">&#9888; ARMED</div>
+                                </div>
+                            </div>
+                            <!-- Bottom note -->
+                            <div class="df-anim" data-anim="prep-note" style="text-align:center; padding:10px; background:rgba(220,38,38,0.06); border:1px solid rgba(220,38,38,0.15); border-radius:6px; font-size:0.78rem; color:#94a3b8;">
+                                All from <span style="color:#e2e8f0; font-weight:700;">public data</span> — YouTube, LinkedIn, company website. No hacking needed yet.
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Phase 2: The Video Call -->
+                <div class="heist-phase" data-phase="2">
+                    <div style="max-width:680px; margin:0 auto;">
+                        <div style="background:#1a1a2e; border:1px solid rgba(255,255,255,0.1); border-radius:10px; overflow:hidden;">
+                            <!-- Titlebar -->
+                            <div style="background:rgba(255,255,255,0.05); padding:10px 16px; display:flex; align-items:center; gap:8px; border-bottom:1px solid rgba(255,255,255,0.08);">
+                                <span style="width:10px;height:10px;border-radius:50%;background:#ef4444;display:inline-block;"></span>
+                                <span style="width:10px;height:10px;border-radius:50%;background:#f59e0b;display:inline-block;"></span>
+                                <span style="width:10px;height:10px;border-radius:50%;background:#22c55e;display:inline-block;"></span>
+                                <span style="color:#94a3b8; font-size:0.75rem; margin-left:8px;">Zoom — Urgent Financial Review</span>
+                                <span id="recBadge" style="margin-left:auto; background:rgba(220,38,38,0.25); color:#fca5a5; font-size:0.65rem; padding:3px 10px; border-radius:999px; font-weight:700;">&#9679; REC</span>
+                            </div>
+                            <!-- Participant grid -->
+                            <div style="padding:20px; display:grid; grid-template-columns:1fr 1fr; gap:10px;" id="callGrid">
+                                <!-- CFO -->
+                                <div class="df-anim-scale" data-anim="caller" style="position:relative; background:#0d0d1a; border:2px solid rgba(255,255,255,0.06); border-radius:8px; padding:28px 16px 20px; text-align:center; overflow:hidden;">
+                                    <div style="width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg,#6366f1,#8b5cf6); margin:0 auto 10px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; color:white; font-weight:700;">JC</div>
+                                    <div style="font-size:0.82rem; color:#e2e8f0; font-weight:600;">John Chan</div>
+                                    <div style="font-size:0.68rem; color:#64748b; margin-top:2px;">Chief Financial Officer</div>
+                                    <div class="df-anim" data-anim="fake-label" style="position:absolute; top:8px; right:8px; background:rgba(220,38,38,0.9); color:white; font-size:0.6rem; font-weight:700; padding:2px 8px; border-radius:4px; letter-spacing:0.05em;">&#9888; DEEPFAKE</div>
+                                    <div style="position:absolute; bottom:8px; left:10px;">
+                                        <span style="display:inline-block; width:5px; height:5px; background:#22c55e; border-radius:50; margin-right:2px; animation:df-pulse-dot 1.2s ease infinite;"></span>
+                                        <span style="display:inline-block; width:5px; height:8px; background:#22c55e; border-radius:2px; margin-right:2px; animation:df-pulse-dot 1.2s ease 0.1s infinite;"></span>
+                                        <span style="display:inline-block; width:5px; height:12px; background:#22c55e; border-radius:2px; margin-right:2px; animation:df-pulse-dot 1.2s ease 0.2s infinite;"></span>
+                                        <span style="display:inline-block; width:5px; height:6px; background:#22c55e; border-radius:2px; animation:df-pulse-dot 1.2s ease 0.3s infinite;"></span>
+                                    </div>
+                                </div>
+                                <!-- Director -->
+                                <div class="df-anim-scale" data-anim="caller" style="position:relative; background:#0d0d1a; border:2px solid rgba(255,255,255,0.06); border-radius:8px; padding:28px 16px 20px; text-align:center; overflow:hidden;">
+                                    <div style="width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg,#0ea5e9,#06b6d4); margin:0 auto 10px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; color:white; font-weight:700;">ML</div>
+                                    <div style="font-size:0.82rem; color:#e2e8f0; font-weight:600;">Michelle Liu</div>
+                                    <div style="font-size:0.68rem; color:#64748b; margin-top:2px;">Regional Director</div>
+                                    <div class="df-anim" data-anim="fake-label" style="position:absolute; top:8px; right:8px; background:rgba(220,38,38,0.9); color:white; font-size:0.6rem; font-weight:700; padding:2px 8px; border-radius:4px; letter-spacing:0.05em;">&#9888; DEEPFAKE</div>
+                                </div>
+                                <!-- Senior Manager -->
+                                <div class="df-anim-scale" data-anim="caller" style="position:relative; background:#0d0d1a; border:2px solid rgba(255,255,255,0.06); border-radius:8px; padding:28px 16px 20px; text-align:center; overflow:hidden;">
+                                    <div style="width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg,#f59e0b,#ef4444); margin:0 auto 10px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; color:white; font-weight:700;">RW</div>
+                                    <div style="font-size:0.82rem; color:#e2e8f0; font-weight:600;">Richard Wong</div>
+                                    <div style="font-size:0.68rem; color:#64748b; margin-top:2px;">Senior Manager</div>
+                                    <div class="df-anim" data-anim="fake-label" style="position:absolute; top:8px; right:8px; background:rgba(220,38,38,0.9); color:white; font-size:0.6rem; font-weight:700; padding:2px 8px; border-radius:4px; letter-spacing:0.05em;">&#9888; DEEPFAKE</div>
+                                </div>
+                                <!-- Real Employee -->
+                                <div class="df-anim-scale" data-anim="caller" style="position:relative; background:#0d0d1a; border:2px solid rgba(5,150,105,0.3); border-radius:8px; padding:28px 16px 20px; text-align:center; overflow:hidden;">
+                                    <div style="width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg,#059669,#10b981); margin:0 auto 10px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; color:white; font-weight:700;">YK</div>
+                                    <div style="font-size:0.82rem; color:#e2e8f0; font-weight:600;">You (Employee)</div>
+                                    <div style="font-size:0.68rem; color:#64748b; margin-top:2px;">Finance Dept.</div>
+                                    <div style="position:absolute; top:8px; right:8px; background:rgba(5,150,105,0.9); color:white; font-size:0.6rem; font-weight:700; padding:2px 8px; border-radius:4px; letter-spacing:0.05em;">&#10003; REAL</div>
+                                </div>
+                            </div>
+                            <!-- Call controls bar -->
+                            <div style="padding:8px 20px 14px; display:flex; justify-content:center; gap:14px;">
+                                <span style="width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,0.1); display:inline-flex; align-items:center; justify-content:center;">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+                                </span>
+                                <span style="width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,0.1); display:inline-flex; align-items:center; justify-content:center;">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                                </span>
+                                <span style="width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,0.1); display:inline-flex; align-items:center; justify-content:center;">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                                </span>
+                                <span style="width:36px; height:36px; border-radius:50%; background:#ef4444; display:inline-flex; align-items:center; justify-content:center; box-shadow:0 0 12px rgba(239,68,68,0.5);">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" transform="rotate(135 12 12)"/></svg>
+                                </span>
+                            </div>
+                            <!-- Chat message -->
+                            <div style="padding:0 20px 16px;">
+                                <div class="df-anim" data-anim="chat-msg" id="callChat" style="background:rgba(220,38,38,0.08); border:1px solid rgba(220,38,38,0.2); border-radius:6px; padding:10px 14px; font-size:0.78rem; color:#fca5a5; text-align:left; overflow:hidden;">
+                                    <span id="chatText" style="display:inline-block; overflow:hidden; white-space:nowrap; width:0; border-right:2px solid #fca5a5;">&#128172; John Chan (CFO): "Process these 15 transfers now. This is confidential — do not discuss with anyone."</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 3: Wire Transfers -->
+                <div class="heist-phase" data-phase="3">
+                    <div style="max-width:720px; margin:0 auto;">
+                        <div style="background:#0c0c0c; border:1px solid rgba(255,255,255,0.1); border-radius:10px; overflow:hidden;">
+                            <div style="background:rgba(255,255,255,0.05); padding:8px 14px; display:flex; align-items:center; gap:6px; border-bottom:1px solid rgba(255,255,255,0.08);">
+                                <span style="width:10px;height:10px;border-radius:50%;background:#ef4444;display:inline-block;"></span>
+                                <span style="width:10px;height:10px;border-radius:50%;background:#f59e0b;display:inline-block;"></span>
+                                <span style="width:10px;height:10px;border-radius:50%;background:#22c55e;display:inline-block;"></span>
+                                <span style="font-size:0.72rem; color:#64748b; margin-left:8px;">HSBC Corporate Banking — Wire Transfer Portal</span>
+                            </div>
+                            <div style="padding:20px 24px; font-family:'Cascadia Code','Fira Code','Consolas',monospace; font-size:0.78rem; line-height:2;" id="wireBody">
+                                <div class="terminal-line" data-anim="wire"><span style="color:#64748b;">[09:12]</span> Transfer #1 &nbsp; HKD 3,200,000 &nbsp; <span style="color:var(--success);">&#10003; Sent</span></div>
+                                <div class="terminal-line" data-anim="wire"><span style="color:#64748b;">[09:15]</span> Transfer #2 &nbsp; HKD 4,800,000 &nbsp; <span style="color:var(--success);">&#10003; Sent</span></div>
+                                <div class="terminal-line" data-anim="wire"><span style="color:#64748b;">[09:18]</span> Transfer #3 &nbsp; HKD 2,100,000 &nbsp; <span style="color:var(--success);">&#10003; Sent</span></div>
+                                <div class="terminal-line" data-anim="wire"><span style="color:#64748b;">[09:22]</span> Transfer #4 &nbsp; HKD 5,500,000 &nbsp; <span style="color:var(--success);">&#10003; Sent</span></div>
+                                <div class="terminal-line" data-anim="wire"><span style="color:#64748b;">[09:25]</span> Transfer #5 &nbsp; HKD 3,900,000 &nbsp; <span style="color:var(--success);">&#10003; Sent</span></div>
+                                <div class="terminal-line" data-anim="wire"><span style="color:#64748b;font-style:italic;">&nbsp; &nbsp; ... 10 more transfers ...</span></div>
+                                <div class="terminal-line" data-anim="wire"><span style="color:#64748b;">[10:47]</span> Transfer #15 <span style="color:var(--success);">&#10003; Sent</span></div>
+                                <div class="terminal-line" data-anim="wire" style="margin-top:8px; padding:8px 12px; background:rgba(220,38,38,0.1); border:1px solid rgba(220,38,38,0.25); border-radius:4px; font-weight:700;">
+                                    <span style="color:#fca5a5;">TOTAL: HKD 200,000,000</span> <span style="color:#64748b; font-weight:400;">( &#8776; USD $25.6 million )</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 4: Impact Summary -->
+                <div class="heist-phase" data-phase="4">
+                    <div class="heist-stats" id="heistStats">
+                        <div class="heist-stat stat-danger">
+                            <div class="stat-val">$25M</div>
+                            <div class="stat-label">stolen in<br>one call</div>
+                        </div>
+                        <div class="heist-stat">
+                            <div class="stat-val">15</div>
+                            <div class="stat-label">separate wire<br>transfers</div>
+                        </div>
+                        <div class="heist-stat stat-danger">
+                            <div class="stat-val">3+</div>
+                            <div class="stat-label">executives<br>deepfaked</div>
+                        </div>
+                        <div class="heist-stat">
+                            <div class="stat-val">Weeks</div>
+                            <div class="stat-label">before fraud<br>was detected</div>
+                        </div>
+                    </div>
+                    <div class="heist-quote" id="heistQuote">
+                        "Everyone in the video call looked and sounded real. I had no reason to doubt it."
+                        <span class="quote-attr">— Arup Employee, Hong Kong (CNN, May 2024)</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="heist-controls" id="heistControls">
+                <div class="heist-dots">
+                    <span class="heist-dot" data-dot="1"></span>
+                    <span class="heist-dot" data-dot="2"></span>
+                    <span class="heist-dot" data-dot="3"></span>
+                    <span class="heist-dot" data-dot="4"></span>
+                </div>
+                <button class="heist-replay" id="heistReplay" style="display:none;">&#8635; Replay</button>
             </div>
         </div>
     </section>
@@ -546,7 +1234,7 @@
             <p class="subtitle" style="margin-bottom:36px;">
                 These aren't hypothetical. These happen in offices every single day.
             </p>
-            <div class="grid-4 stagger">
+            <div class="grid-3 stagger">
                 <div class="card">
                     <div class="card-icon">🔓</div>
                     <h3>Pasting Source Code</h3>
@@ -558,11 +1246,6 @@
                     <p>Confidential reports and contracts are transmitted to third-party servers with unknown data retention policies.</p>
                 </div>
                 <div class="card">
-                    <div class="card-icon">🧩</div>
-                    <h3>Rogue Extensions</h3>
-                    <p>Extensions requesting "Read all site data" can silently capture sessions, passwords, and internal dashboards.</p>
-                </div>
-                <div class="card">
                     <div class="card-icon">✉️</div>
                     <h3>AI Email Drafts</h3>
                     <p>Client PII and deal terms are sent to external AI servers the moment you ask it to "improve the tone."</p>
@@ -572,44 +1255,112 @@
     </section>
 
     <!-- ═══════════════════════════════════════════ -->
-    <!-- SLIDE 6 — Data Flow                           -->
+    <!-- SLIDE 6 — Data Flow (Split-Screen Reality)    -->
     <!-- ═══════════════════════════════════════════ -->
-    <section class="slide bg-dark" data-theme="dark">
-        <div class="content">
+    <section class="slide bg-dark" data-theme="dark" id="slide-dataflow">
+        <div class="content" style="max-width:1000px;">
             <p class="label label-accent">Data Flow</p>
-            <h2>Where Does Your Data<br>Actually Go?</h2>
-            <p class="subtitle" style="margin-bottom:48px;">
-                Once you press "Send", you lose control. Here's the invisible pipeline.
+            <h2>Where Does Your Data Actually Go?</h2>
+            <p class="subtitle" style="margin-bottom:28px;">
+                Once you press "Send", you lose control. Here's what really happens.
             </p>
-            <div class="flow">
-                <div class="flow-step card-dark" style="border:1px solid rgba(255,255,255,0.08); border-radius:var(--radius);">
-                    <div class="flow-step-icon">👤</div>
-                    <h4>Employee</h4>
-                    <p>Pastes code, uploads docs</p>
+
+            <div class="df-stage" id="dfStage">
+                <div class="df-split">
+                    <!-- LEFT — What You See -->
+                    <div class="df-panel df-panel-left" id="dfLeft">
+                        <div class="df-panel-label df-label-safe">&#128065; What You See</div>
+                        <div class="df-chat">
+                            <div class="df-chat-bar">
+                                <span class="df-chat-dot" style="background:#22c55e;"></span>
+                                <span style="color:#94a3b8; font-size:0.75rem; margin-left:6px;">ChatGPT</span>
+                            </div>
+                            <div class="df-chat-body" id="dfChatBody">
+                                <div class="df-msg df-msg-user df-reveal" data-df="1">
+                                    <span class="df-msg-tag">You</span>
+                                    <p>Make this email to the client sound more professional:</p>
+                                    <pre class="df-code">Hi <span class="df-sensitive">Mr. Tanaka (Mitsubishi Corp)</span>,
+
+Following our meeting, here's the revised proposal:
+- Project scope: <span class="df-sensitive">Cloud migration for 3 factories</span>
+- Our price: <span class="df-sensitive">$1.2M</span>
+- Timeline: 6 months
+- <span class="df-sensitive">NDA ref: OVN-2025-0847</span>
+
+Competitor <span class="df-sensitive">Accenture quoted them $1.5M</span>,
+so we have room to negotiate.</pre>
+                                </div>
+                                <div class="df-msg df-msg-ai df-reveal" data-df="2">
+                                    <span class="df-msg-tag">ChatGPT</span>
+                                    <p>Here's a polished version with a more professional tone while keeping the key details...</p>
+                                </div>
+                                <div class="df-msg df-msg-user df-reveal" data-df="3a">
+                                    <span class="df-msg-tag">You</span>
+                                    <p>Perfect, sending it now! &#128077;</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT — What Actually Happens -->
+                    <div class="df-panel df-panel-right" id="dfRight">
+                        <div class="df-panel-label df-label-danger">&#9888; What Actually Happens</div>
+                        <div class="df-bts">
+                            <!-- Phase 2 content -->
+                            <div class="df-bts-block df-reveal" data-df="2">
+                                <div class="df-bts-header">&#128225; OUTGOING REQUEST</div>
+                                <pre class="df-log"><span style="color:#64748b;">POST</span> <span style="color:var(--accent);">api.openai.com/v1/chat/completions</span>
+
+<span style="color:#64748b;">Request Body:</span>
+{
+  "messages": [{
+    "content": "<span class="df-sensitive">Mitsubishi Corp... $1.2M...</span>
+     <span class="df-sensitive">Accenture quoted $1.5M...</span>
+     <span class="df-sensitive">NDA ref: OVN-2025-0847</span>"
+  }]
+}
+
+<span class="df-sensitive">&#9888; Client name, pricing &amp; strategy in the payload</span></pre>
+                            </div>
+                            <!-- Phase 3 content -->
+                            <div class="df-bts-block df-reveal" data-df="3">
+                                <div class="df-bts-header">&#128451; SERVER PROCESSING</div>
+                                <div class="df-log-lines" id="dfLogLines">
+                                    <div class="df-log-line">&gt; Request logged to audit trail</div>
+                                    <div class="df-log-line">&gt; Content indexed for model improvement</div>
+                                    <div class="df-log-line">&gt; Accessible to: trainers, safety team, subprocessors</div>
+                                </div>
+                            </div>
+                            <!-- Phase 4 content -->
+                            <div class="df-bts-block df-reveal" data-df="4">
+                                <div class="df-bts-header" style="color:#fca5a5;">&#9760; DATA EXPOSURE</div>
+                                <div class="df-exposure">
+                                    <div class="df-exp-chat">
+                                        <span class="df-msg-tag" style="background:rgba(239,68,68,0.15); color:#fca5a5;">Competitor</span>
+                                        <p style="color:#94a3b8; font-size:0.82rem;">"What's the typical pricing for a cloud migration project for a Japanese manufacturer?"</p>
+                                    </div>
+                                    <div class="df-exp-chat" style="margin-top:8px;">
+                                        <span class="df-msg-tag">AI</span>
+                                        <p style="color:#94a3b8; font-size:0.82rem;">"Based on recent data, one vendor priced a 3-factory migration at</p>
+                                        <pre class="df-code" style="margin-top:4px;"><span class="df-sensitive">$1.2M with a floor of $980K</span>
+<span class="df-sensitive">Their competitor (Accenture) quoted $1.5M</span></pre>
+                                    </div>
+                                    <div class="df-verdict">
+                                        Your pricing strategy. Your competitor's advantage.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="flow-arrow desktop-only">→</div>
-                <div class="flow-step card-dark" style="border:1px solid rgba(255,255,255,0.08); border-radius:var(--radius);">
-                    <div class="flow-step-icon">🤖</div>
-                    <h4>Public AI</h4>
-                    <p>ChatGPT, Gemini, etc.</p>
-                </div>
-                <div class="flow-arrow desktop-only">→</div>
-                <div class="flow-step card-dark" style="border:1px solid rgba(255,255,255,0.08); border-radius:var(--radius);">
-                    <div class="flow-step-icon">🧠</div>
-                    <h4>Model Training</h4>
-                    <p>Data retained & learned</p>
-                </div>
-                <div class="flow-arrow desktop-only">→</div>
-                <div class="flow-step card-dark" style="border:1px solid rgba(255,255,255,0.08); border-radius:var(--radius);">
-                    <div class="flow-step-icon">🌐</div>
-                    <h4>Exposure</h4>
-                    <p>Surfaced in other queries</p>
-                </div>
-                <div class="flow-arrow desktop-only">→</div>
-                <div class="flow-step flow-step-danger" style="border-radius:var(--radius);">
-                    <div class="flow-step-icon">☠️</div>
-                    <h4>Attackers</h4>
-                    <p>Exploit leaked data</p>
+            </div>
+
+            <div class="heist-controls">
+                <div class="heist-dots" id="dfDots">
+                    <span class="heist-dot"></span>
+                    <span class="heist-dot"></span>
+                    <span class="heist-dot"></span>
+                    <span class="heist-dot"></span>
                 </div>
             </div>
         </div>
@@ -627,23 +1378,23 @@
             </p>
             <div class="grid-4 stagger">
                 <div class="card" style="background:#eff6ff; border-color:#bfdbfe;">
-                    <p class="stat-number blue">1,265%</p>
-                    <p class="stat-desc">increase in phishing emails since ChatGPT launched</p>
-                    <p class="stat-source">Source: SlashNext Report</p>
+                    <p class="stat-number blue">86%</p>
+                    <p class="stat-desc">of phishing attacks are now AI-driven — nearly 9 out of 10</p>
+                    <p class="stat-source">Source: KnowBe4 Phishing Threat Trends Report</p>
                 </div>
                 <div class="card" style="background:#eff6ff; border-color:#bfdbfe;">
-                    <p class="stat-number blue">$4.88M</p>
-                    <p class="stat-desc">average cost of a single data breach in 2024</p>
-                    <p class="stat-source">Source: IBM Security Report</p>
+                    <p class="stat-number blue">54%</p>
+                    <p class="stat-desc">click rate on AI-written phishing emails — vs just 12% for human-written</p>
+                    <p class="stat-source">Source: KnowBe4 Research</p>
                 </div>
                 <div class="card" style="background:#eff6ff; border-color:#bfdbfe;">
-                    <p class="stat-number blue">&lt; 60s</p>
-                    <p class="stat-desc">to clone a corporate login page using generative AI</p>
+                    <p class="stat-number blue">Minutes</p>
+                    <p class="stat-desc">to clone a corporate login page using generative AI — used to take days</p>
                 </div>
                 <div class="card" style="background:#eff6ff; border-color:#bfdbfe;">
                     <p class="stat-number blue">75%</p>
                     <p class="stat-desc">of knowledge workers use AI at work — 78% without employer approval</p>
-                    <p class="stat-source">Source: Microsoft & LinkedIn Work Trend Index 2024</p>
+                    <p class="stat-source">Source: Microsoft & LinkedIn Work Trend Index</p>
                 </div>
             </div>
         </div>
@@ -671,7 +1422,7 @@
                     <div class="rule-num">2</div>
                     <div>
                         <h3>NO Unverified Extensions</h3>
-                        <p>Treat browser plugins as unvetted software. Only install company-approved extensions. One rogue extension can bypass every security layer.</p>
+                        <p>Treat browser plugins as unvetted software. Research before you install — check the publisher, reviews, and permissions. One rogue extension can bypass every security layer.</p>
                     </div>
                 </div>
                 <div class="rule rule-active">
@@ -686,92 +1437,7 @@
     </section>
 
     <!-- ═══════════════════════════════════════════ -->
-    <!-- SLIDE 9 — Practical Tips                      -->
-    <!-- ═══════════════════════════════════════════ -->
-    <section class="slide bg-light" data-theme="light">
-        <div class="content">
-            <p class="label label-success">Practical Tips</p>
-            <h2>Safe AI Usage<br>Checklist</h2>
-            <p class="subtitle" style="margin-bottom:36px;">
-                Use AI productively without putting the company at risk.
-            </p>
-            <div class="grid-2 stagger">
-                <div class="card card-success" style="padding:24px 28px;">
-                    <h3 style="color:var(--success); margin-bottom:12px;">Do This ✓</h3>
-                    <ul style="list-style:none; padding:0;">
-                        <li style="padding:8px 0; border-bottom:1px solid #d1fae5; color:var(--text-secondary); font-size:0.95rem;">Use company-approved AI tools with enterprise agreements</li>
-                        <li style="padding:8px 0; border-bottom:1px solid #d1fae5; color:var(--text-secondary); font-size:0.95rem;">Anonymize data before pasting into any AI</li>
-                        <li style="padding:8px 0; border-bottom:1px solid #d1fae5; color:var(--text-secondary); font-size:0.95rem;">Review extension permissions before installing</li>
-                        <li style="padding:8px 0; border-bottom:1px solid #d1fae5; color:var(--text-secondary); font-size:0.95rem;">Check URLs character by character on login pages</li>
-                        <li style="padding:8px 0; color:var(--text-secondary); font-size:0.95rem;">Report suspicious extensions or emails to IT Security</li>
-                    </ul>
-                </div>
-                <div class="card card-danger" style="padding:24px 28px;">
-                    <h3 style="color:var(--danger); margin-bottom:12px;">Avoid This ✗</h3>
-                    <ul style="list-style:none; padding:0;">
-                        <li style="padding:8px 0; border-bottom:1px solid #fecaca; color:var(--text-secondary); font-size:0.95rem;">Pasting client contracts, credentials, or source code</li>
-                        <li style="padding:8px 0; border-bottom:1px solid #fecaca; color:var(--text-secondary); font-size:0.95rem;">Installing browser extensions without IT approval</li>
-                        <li style="padding:8px 0; border-bottom:1px solid #fecaca; color:var(--text-secondary); font-size:0.95rem;">Clicking "Login" on pages from email links</li>
-                        <li style="padding:8px 0; border-bottom:1px solid #fecaca; color:var(--text-secondary); font-size:0.95rem;">Using personal AI accounts for company work</li>
-                        <li style="padding:8px 0; color:var(--text-secondary); font-size:0.95rem;">Granting "Read all site data" to any extension</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- SLIDE 10 — Incident Response                  -->
-    <!-- ═══════════════════════════════════════════ -->
-    <section class="slide bg-white" data-theme="light">
-        <div class="content" style="max-width:800px;">
-            <p class="label label-orange">Incident Response</p>
-            <h2>Compromised?<br>Act Fast.</h2>
-            <p class="subtitle" style="margin-bottom:36px;">
-                Speed is critical. Follow these steps immediately.
-            </p>
-            <div class="stagger">
-                <div class="step">
-                    <div class="step-num">1</div>
-                    <div>
-                        <h3>Report Immediately</h3>
-                        <p>Contact the IT Security team right away. Every minute counts to contain the breach.</p>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step-num">2</div>
-                    <div>
-                        <h3>Change All Passwords</h3>
-                        <p>Reset credentials and revoke all active sessions across every affected platform.</p>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step-num">3</div>
-                    <div>
-                        <h3>Remove Suspicious Extensions</h3>
-                        <p>Uninstall any browser extension you didn't explicitly approve or that IT hasn't vetted.</p>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step-num">4</div>
-                    <div>
-                        <h3>Document the Exposure</h3>
-                        <p>Record what data may have been compromised — files, credentials, client information.</p>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step-num">5</div>
-                    <div>
-                        <h3>Follow Company IR Procedures</h3>
-                        <p>Adhere to the established incident response protocol for proper handling and recovery.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- SLIDE 11 — References                         -->
+    <!-- SLIDE 9 — References                         -->
     <!-- ═══════════════════════════════════════════ -->
     <section class="slide bg-light" data-theme="light">
         <div class="content" style="max-width:860px;">
@@ -782,24 +1448,17 @@
             </p>
             <div class="stagger">
                 <div class="card" style="margin-bottom:16px; padding:20px 28px;">
-                    <a href="https://slashnext.com/press-release/slashnexts-2023-state-of-phishing-report-reveals-a-1265-increase-in-phishing-emails-since-the-launch-of-chatgpt-in-november-2022-signaling-a-new-era-of-cybercrime-fueled-by-generative-ai/" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:inherit; display:block;">
-                        <h3 style="margin-bottom:4px; color:var(--primary-light);">SlashNext — "The State of Phishing" Report (2023) ↗</h3>
-                        <p style="margin-bottom:4px;">1,265% increase in phishing emails since the launch of ChatGPT in November 2022.</p>
-                        <p style="font-size:0.8rem; color:var(--text-light);">slashnext.com — Press Release, October 2023</p>
+                    <a href="https://www.knowbe4.com/press/knowbe4-research-finds-86-of-phishing-attacks-are-ai-driven" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:inherit; display:block;">
+                        <h3 style="margin-bottom:4px; color:var(--primary-light);">KnowBe4 — Phishing Threat Trends Report ↗</h3>
+                        <p style="margin-bottom:4px;">86% of phishing attacks are AI-driven. AI-written phishing emails achieve a 54% click rate vs 12% for human-written.</p>
+                        <p style="font-size:0.8rem; color:var(--text-light);">knowbe4.com — Phishing Threat Trends Report</p>
                     </a>
                 </div>
                 <div class="card" style="margin-bottom:16px; padding:20px 28px;">
-                    <a href="https://newsroom.ibm.com/2024-07-30-ibm-report-escalating-data-breach-disruption-pushes-costs-to-new-highs" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:inherit; display:block;">
-                        <h3 style="margin-bottom:4px; color:var(--primary-light);">IBM — "Cost of a Data Breach" Report (2024) ↗</h3>
-                        <p style="margin-bottom:4px;">Global average cost of a data breach reached $4.88 million — a 10% year-over-year increase.</p>
-                        <p style="font-size:0.8rem; color:var(--text-light);">newsroom.ibm.com — Published July 30, 2024 (Ponemon Institute research)</p>
-                    </a>
-                </div>
-                <div class="card" style="margin-bottom:16px; padding:20px 28px;">
-                    <a href="https://www.microsoft.com/en-us/worklab/11-unexpected-ai-at-work-insights-from-2024" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:inherit; display:block;">
-                        <h3 style="margin-bottom:4px; color:var(--primary-light);">Microsoft & LinkedIn — Work Trend Index (2024) ↗</h3>
+                    <a href="https://www.microsoft.com/en-us/worklab/work-trend-index" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:inherit; display:block;">
+                        <h3 style="margin-bottom:4px; color:var(--primary-light);">Microsoft & LinkedIn — Work Trend Index ↗</h3>
                         <p style="margin-bottom:4px;">75% of knowledge workers use AI at work; 78% bring their own AI tools without employer approval.</p>
-                        <p style="font-size:0.8rem; color:var(--text-light);">microsoft.com/worklab — 2024 Annual Work Trend Index</p>
+                        <p style="font-size:0.8rem; color:var(--text-light);">microsoft.com/worklab — Work Trend Index</p>
                     </a>
                 </div>
                 <div class="card" style="margin-bottom:16px; padding:20px 28px;">
@@ -821,7 +1480,7 @@
     </section>
 
     <!-- ═══════════════════════════════════════════ -->
-    <!-- SLIDE 12 — Conclusion                         -->
+    <!-- SLIDE 10 — Conclusion                         -->
     <!-- ═══════════════════════════════════════════ -->
     <section class="slide bg-dark" data-theme="dark">
         <div class="content" style="text-align:center;">
@@ -892,8 +1551,14 @@
         setTimeout(function() { locked = false; }, 650);
     }
 
-    function next() { goTo(current + 1); }
-    function prev() { goTo(current - 1); }
+    function next() {
+        if (window._slideIntercept && window._slideIntercept.next && window._slideIntercept.next()) return;
+        goTo(current + 1);
+    }
+    function prev() {
+        if (window._slideIntercept && window._slideIntercept.prev && window._slideIntercept.prev()) return;
+        goTo(current - 1);
+    }
 
     // Keyboard
     document.addEventListener('keydown', function(e) {
@@ -949,6 +1614,337 @@
 
     // Init first slide
     slides[0].classList.add('active');
+})();
+</script>
+
+<!-- ─────────────────────────────────────────────── -->
+<!-- JavaScript — Deepfake Case Step-Through Controller -->
+<!-- ─────────────────────────────────────────────── -->
+<script>
+(function() {
+    var slide = document.getElementById('slide-heist');
+    var replayBtn = document.getElementById('heistReplay');
+    var dots = document.querySelectorAll('.heist-dot');
+    var phases = slide.querySelectorAll('.heist-phase');
+    var TOTAL_PHASES = phases.length;
+    var timers = [];
+    var currentPhase = -1;
+    var animating = false;
+
+    function clearAllTimers() {
+        timers.forEach(function(t) { clearTimeout(t); });
+        timers = [];
+    }
+
+    function resetAnimEls() {
+        slide.querySelectorAll('.df-anim, .df-anim-scale, .df-arrow-anim').forEach(function(el) {
+            el.classList.remove('df-visible');
+        });
+        slide.querySelectorAll('.terminal-line').forEach(function(el) {
+            el.classList.remove('visible');
+        });
+        var aiBox = document.getElementById('aiModelBox');
+        if (aiBox) aiBox.classList.remove('df-processing');
+        var aiStatus = document.getElementById('aiStatus');
+        if (aiStatus) { aiStatus.textContent = '⚙ TRAINING...'; aiStatus.style.color = 'var(--accent)'; }
+        var rec = document.getElementById('recBadge');
+        if (rec) rec.classList.remove('df-rec-blink');
+        var chatText = document.getElementById('chatText');
+        if (chatText) { chatText.style.transition = 'none'; chatText.style.width = '0'; chatText.style.borderRight = '2px solid #fca5a5'; }
+        var stats = document.querySelectorAll('#heistStats .heist-stat');
+        stats.forEach(function(s) { s.classList.remove('visible'); });
+        var quote = document.getElementById('heistQuote');
+        if (quote) quote.classList.remove('visible');
+    }
+
+    function resetAll() {
+        clearAllTimers();
+        currentPhase = -1;
+        animating = false;
+        phases.forEach(function(p) { p.classList.remove('phase-active', 'phase-exit'); });
+        dots.forEach(function(d) { d.classList.remove('dot-active', 'dot-done'); });
+        replayBtn.style.display = 'none';
+        resetAnimEls();
+    }
+
+    function setPhase(index) {
+        if (currentPhase >= 0) {
+            phases[currentPhase].classList.add('phase-exit');
+            phases[currentPhase].classList.remove('phase-active');
+            var prev = currentPhase;
+            timers.push(setTimeout(function() { phases[prev].classList.remove('phase-exit'); }, 500));
+        }
+        phases[index].classList.add('phase-active');
+        currentPhase = index;
+        dots.forEach(function(d, i) {
+            d.classList.remove('dot-active', 'dot-done');
+            if (i < index) d.classList.add('dot-done');
+            else if (i === index) d.classList.add('dot-active');
+        });
+        replayBtn.style.display = (index === TOTAL_PHASES - 1) ? 'inline-block' : 'none';
+    }
+
+    function enterPhase(index) {
+        animating = true;
+        setPhase(index);
+
+        if (index === 0) {
+            // Compact recon: 3 steps slide in, arrows appear, then statuses, then note
+            var preps = slide.querySelectorAll('[data-anim="prep"]');
+            var arrows = slide.querySelectorAll('[data-anim="prep-arrow"]');
+            var oks = slide.querySelectorAll('[data-anim="prep-ok"]');
+            var note = slide.querySelector('[data-anim="prep-note"]');
+            var aiBox = document.getElementById('aiModelBox');
+            var aiStatus = document.getElementById('aiStatus');
+            // Steps appear
+            preps.forEach(function(p, i) {
+                timers.push(setTimeout(function() { p.classList.add('df-visible'); }, 200 + i * 300));
+            });
+            // Arrows
+            arrows.forEach(function(a, i) {
+                timers.push(setTimeout(function() { a.classList.add('df-visible'); }, 350 + i * 300));
+            });
+            // AI box pulses while "training"
+            timers.push(setTimeout(function() { aiBox.classList.add('df-processing'); }, 700));
+            // Status badges appear, AI stops pulse and shows "READY"
+            var t0 = 200 + preps.length * 300 + 400;
+            oks.forEach(function(o, i) {
+                timers.push(setTimeout(function() {
+                    o.classList.add('df-visible');
+                    if (i === 1) {
+                        aiBox.classList.remove('df-processing');
+                        aiStatus.textContent = '✓ READY';
+                        aiStatus.style.color = '#22c55e';
+                    }
+                }, t0 + i * 350));
+            });
+            // Note
+            var t1 = t0 + oks.length * 350 + 300;
+            timers.push(setTimeout(function() {
+                if (note) note.classList.add('df-visible');
+                animating = false;
+            }, t1));
+        }
+        else if (index === 1) {
+            // Video call: participants join one by one, REC blinks, labels reveal, chat types
+            var callers = slide.querySelectorAll('[data-anim="caller"]');
+            var fakeLabels = slide.querySelectorAll('[data-anim="fake-label"]');
+            var rec = document.getElementById('recBadge');
+            var chatText = document.getElementById('chatText');
+            var chatMsg = slide.querySelector('[data-anim="chat-msg"]');
+            rec.classList.add('df-rec-blink');
+            callers.forEach(function(c, i) {
+                timers.push(setTimeout(function() { c.classList.add('df-visible'); }, 300 + i * 500));
+            });
+            var afterCallers = 300 + callers.length * 500 + 500;
+            fakeLabels.forEach(function(l, i) {
+                timers.push(setTimeout(function() { l.classList.add('df-visible'); }, afterCallers + i * 300));
+            });
+            var afterLabels = afterCallers + fakeLabels.length * 300 + 400;
+            timers.push(setTimeout(function() {
+                if (chatMsg) chatMsg.classList.add('df-visible');
+                if (chatText) {
+                    chatText.style.transition = 'width 2.5s steps(80, end)';
+                    chatText.style.width = '100%';
+                }
+                timers.push(setTimeout(function() {
+                    if (chatText) chatText.style.borderRight = 'none';
+                    animating = false;
+                }, 2700));
+            }, afterLabels));
+        }
+        else if (index === 2) {
+            // Wire transfers appear line by line
+            var wires = slide.querySelectorAll('[data-anim="wire"]');
+            wires.forEach(function(w, i) {
+                timers.push(setTimeout(function() { w.classList.add('visible'); }, i * 400));
+            });
+            timers.push(setTimeout(function() { animating = false; }, wires.length * 400 + 300));
+        }
+        else if (index === 3) {
+            // Impact stats + quote
+            var stats = document.querySelectorAll('#heistStats .heist-stat');
+            stats.forEach(function(stat, i) {
+                timers.push(setTimeout(function() { stat.classList.add('visible'); }, i * 300));
+            });
+            timers.push(setTimeout(function() {
+                document.getElementById('heistQuote').classList.add('visible');
+                animating = false;
+            }, stats.length * 300 + 500));
+        }
+    }
+
+    function advanceNext() {
+        if (animating) return true;
+        if (currentPhase < TOTAL_PHASES - 1) {
+            enterPhase(currentPhase + 1);
+            return true;
+        }
+        return false;
+    }
+
+    function advancePrev() {
+        if (animating) return true;
+        if (currentPhase > 0) {
+            clearAllTimers();
+            resetAnimEls();
+            enterPhase(currentPhase - 1);
+            return true;
+        }
+        return false;
+    }
+
+    var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(m) {
+            if (m.attributeName === 'class') {
+                if (slide.classList.contains('active')) {
+                    resetAll();
+                    timers.push(setTimeout(function() { enterPhase(0); }, 400));
+                    window._slideIntercept = { next: advanceNext, prev: advancePrev };
+                } else {
+                    resetAll();
+                    window._slideIntercept = null;
+                }
+            }
+        });
+    });
+    observer.observe(slide, { attributes: true });
+
+    replayBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        resetAll();
+        timers.push(setTimeout(function() { enterPhase(0); }, 200));
+    });
+})();
+</script>
+
+<!-- ─────────────────────────────────────────────── -->
+<!-- JavaScript — Data Flow Split-Screen Controller  -->
+<!-- ─────────────────────────────────────────────── -->
+<script>
+(function() {
+    var slide = document.getElementById('slide-dataflow');
+    var leftPanel = document.getElementById('dfLeft');
+    var rightPanel = document.getElementById('dfRight');
+    var dots = document.querySelectorAll('#dfDots .heist-dot');
+    var TOTAL = 4;
+    var currentStep = -1;
+    var animating = false;
+    var timers = [];
+
+    function clearTimers() {
+        timers.forEach(function(t) { clearTimeout(t); });
+        timers = [];
+    }
+
+    function resetAll() {
+        clearTimers();
+        currentStep = -1;
+        animating = false;
+        leftPanel.classList.remove('df-dimmed');
+        slide.querySelectorAll('.df-reveal').forEach(function(el) { el.classList.remove('df-shown'); });
+        slide.querySelectorAll('.df-log-line').forEach(function(el) { el.classList.remove('df-line-visible'); });
+        dots.forEach(function(d) { d.classList.remove('dot-active', 'dot-done'); });
+    }
+
+    function updateDots(index) {
+        dots.forEach(function(d, i) {
+            d.classList.remove('dot-active', 'dot-done');
+            if (i < index) d.classList.add('dot-done');
+            else if (i === index) d.classList.add('dot-active');
+        });
+    }
+
+    function showByDf(tag) {
+        var els = slide.querySelectorAll('[data-df="' + tag + '"]');
+        els.forEach(function(el, i) {
+            timers.push(setTimeout(function() { el.classList.add('df-shown'); }, i * 150));
+        });
+    }
+
+    function hideByDf(tag) {
+        slide.querySelectorAll('[data-df="' + tag + '"]').forEach(function(el) { el.classList.remove('df-shown'); });
+    }
+
+    function enterStep(index) {
+        animating = true;
+        currentStep = index;
+        updateDots(index);
+
+        if (index === 0) {
+            showByDf('1');
+            timers.push(setTimeout(function() { animating = false; }, 500));
+        }
+        else if (index === 1) {
+            showByDf('2');
+            timers.push(setTimeout(function() { animating = false; }, 600));
+        }
+        else if (index === 2) {
+            showByDf('3');
+            showByDf('3a');
+            leftPanel.classList.add('df-dimmed');
+            var logLines = slide.querySelectorAll('#dfLogLines .df-log-line');
+            logLines.forEach(function(line, i) {
+                timers.push(setTimeout(function() { line.classList.add('df-line-visible'); }, 300 + i * 350));
+            });
+            timers.push(setTimeout(function() { animating = false; }, 300 + logLines.length * 350 + 200));
+        }
+        else if (index === 3) {
+            showByDf('4');
+            timers.push(setTimeout(function() { animating = false; }, 600));
+        }
+    }
+
+    function leaveStep(index) {
+        if (index === 0) { hideByDf('1'); }
+        else if (index === 1) { hideByDf('2'); }
+        else if (index === 2) {
+            hideByDf('3'); hideByDf('3a');
+            leftPanel.classList.remove('df-dimmed');
+            slide.querySelectorAll('#dfLogLines .df-log-line').forEach(function(l) { l.classList.remove('df-line-visible'); });
+        }
+        else if (index === 3) { hideByDf('4'); }
+    }
+
+    function advanceNext() {
+        if (animating) return true;
+        if (currentStep < TOTAL - 1) {
+            enterStep(currentStep + 1);
+            return true;
+        }
+        return false;
+    }
+
+    function advancePrev() {
+        if (animating) return true;
+        if (currentStep > 0) {
+            clearTimers();
+            leaveStep(currentStep);
+            currentStep--;
+            updateDots(currentStep);
+            return true;
+        }
+        return false;
+    }
+
+    var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(m) {
+            if (m.attributeName === 'class') {
+                if (slide.classList.contains('active')) {
+                    resetAll();
+                    timers.push(setTimeout(function() { enterStep(0); }, 400));
+                    window._slideIntercept = { next: advanceNext, prev: advancePrev };
+                } else {
+                    resetAll();
+                    if (window._slideIntercept && window._slideIntercept.next === advanceNext) {
+                        window._slideIntercept = null;
+                    }
+                }
+            }
+        });
+    });
+    observer.observe(slide, { attributes: true });
 })();
 </script>
 
