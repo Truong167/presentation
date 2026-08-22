@@ -22,6 +22,13 @@ steps:
 
   - name: deploy
     image: alpine:3.19
+    environment:
+      API_KEY:
+        from_secret: api_key
+      DEPLOY_TOKEN:
+        from_secret: deploy_token
+      DB_URL:
+        from_secret: db_url
     commands:
       - echo "=== Deployment Info ==="
       - echo "Environment  = $environment"
@@ -30,4 +37,3 @@ steps:
       - echo "DB URL       = $DB_URL"
       - echo "Notify Slack = $notify_slack"
       - echo "======================"
-    secrets: [api_key, deploy_token, db_url]
