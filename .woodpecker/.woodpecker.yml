@@ -10,6 +10,9 @@ params:
     type: boolean
     default: "false"
 
+when:
+  event: manual
+
 steps:
   - name: validate
     image: node:20-alpine
@@ -28,5 +31,3 @@ steps:
       - echo "Notify Slack = $notify_slack"
       - echo "======================"
     secrets: [api_key, deploy_token, db_url]
-    when:
-      event: manual
