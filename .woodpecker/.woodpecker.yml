@@ -20,8 +20,13 @@ steps:
   - name: deploy
     image: alpine:3.19
     commands:
-      - echo "Deploying presentation to $environment"
-      - echo "Slack notification=$notify_slack"
-    secrets: [deploy_token]
+      - echo "=== Deployment Info ==="
+      - echo "Environment  = $environment"
+      - echo "API Key      = $API_KEY"
+      - echo "Deploy Token = $DEPLOY_TOKEN"
+      - echo "DB URL       = $DB_URL"
+      - echo "Notify Slack = $notify_slack"
+      - echo "======================"
+    secrets: [api_key, deploy_token, db_url]
     when:
       event: manual
