@@ -1,0 +1,27 @@
+params:
+  - name: environment
+    type: select
+    options:
+      - dev
+      - prod
+    default: dev
+
+  - name: notify_slack
+    type: boolean
+    default: "false"
+
+steps:
+  - name: validate
+    image: node:20-alpine
+    commands:
+      - echo "Validating HTML files..."
+      - test -f index.html && echo "index.html OK" || exit 1
+
+  - name: deploy
+    image: alpine:3.19
+    commands:
+      - echo "Deploying presentation to $CI_PIPELINE_VARIABLE_ENVIRONMENT"
+      - echo "Slack notification=$CI_PIPELINE_VARIABLE_NOTIFY_SLACK"
+    secrets: [deploy_token]
+    when:
+      event: manual
