@@ -20,8 +20,8 @@ steps:
   - name: deploy
     image: alpine:3.19
     commands:
-      - echo "Deploying presentation to $CI_PIPELINE_VARIABLE_ENVIRONMENT"
-      - echo "Slack notification=$CI_PIPELINE_VARIABLE_NOTIFY_SLACK"
+      - echo "Deploying presentation to $environment"
+      - echo "Slack notification=$notify_slack"
     secrets: [deploy_token]
     when:
       event: manual
