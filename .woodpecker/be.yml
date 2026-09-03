@@ -17,7 +17,7 @@ params:
 
 when:
   event: manual
-  evaluate: type == "fe"
+  evaluate: type == "be"
 
 steps:
   - name: validate
