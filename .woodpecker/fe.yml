@@ -1,4 +1,9 @@
 params:
+  - name: type
+    type: select
+    options:
+      - fe
+      - be
   - name: environment
     type: select
     options:
@@ -12,6 +17,7 @@ params:
 
 when:
   event: manual
+  evaluate: type == "fe"
 
 steps:
   - name: validate
@@ -25,10 +31,6 @@ steps:
     environment:
       API_KEY:
         from_secret: api_key
-      DEPLOY_TOKEN:
-        from_secret: deploy_token
-      DB_URL:
-        from_secret: db_url
     commands:
       - echo "=== Deployment Info ==="
       - echo "Environment  = $environment"
@@ -36,9 +38,3 @@ steps:
       - echo ""
       - echo "=== Secret Verification ==="
       - echo "API_KEY length     = $(echo -n $API_KEY | wc -c)"
-      - echo "API_KEY md5        = $(echo -n $API_KEY | md5sum | cut -d' ' -f1)"
-      - echo "DEPLOY_TOKEN length= $(echo -n $DEPLOY_TOKEN | wc -c)"
-      - echo "DEPLOY_TOKEN md5   = $(echo -n $DEPLOY_TOKEN | md5sum | cut -d' ' -f1)"
-      - echo "DB_URL length      = $(echo -n $DB_URL | wc -c)"
-      - echo "DB_URL md5         = $(echo -n $DB_URL | md5sum | cut -d' ' -f1)"
-      - echo "======================"
