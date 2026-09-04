@@ -1,4 +1,4 @@
-uses: .woodpecker/deploy.yml
+uses: Truong167/test/.woodpecker.yml@main
 environment: be
 with:
   component: be
