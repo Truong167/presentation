@@ -1,7 +1,7 @@
 uses: Truong167/test/.woodpecker.yml@main
 environment: fe
 with:
-  component: fe
+  component: $target
   validate_command: test -f index.html && echo "index.html OK" || exit 1
   deploy_image: node:20-alpine
 
