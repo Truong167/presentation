@@ -1,4 +1,4 @@
-uses: .woodpecker/templates/deploy.yml
+uses: .woodpecker/deploy.yml
 environment: be
 with:
   validate_command: echo "Validating be files..."

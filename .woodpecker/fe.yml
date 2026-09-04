@@ -1,4 +1,4 @@
-uses: .woodpecker/templates/deploy.yml
+uses: .woodpecker/deploy.yml
 environment: fe
 with:
   validate_command: echo "Validating HTML files..." && test -f index.html && echo "index.html OK" || exit 1
