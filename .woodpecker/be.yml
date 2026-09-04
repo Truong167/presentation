@@ -1,39 +1,8 @@
-params:
-  - name: type
-    type: select
-    options:
-      - fe
-      - be
-  - name: environment
-    type: select
-    options:
-      - dev
-      - prod
-    default: dev
-
-  - name: notify_slack
-    type: boolean
-    default: "false"
+uses: .woodpecker/templates/deploy.yml
+environment: be
+with:
+  validate_command: echo "Validating be files..."
 
 when:
   event: manual
   evaluate: type == "be"
-
-steps:
-  - name: validate
-    image: node:20-alpine
-    commands:
-      - echo "Validating be files..."
-
-  - name: deploy
-    image: alpine:3.19
-    environment:
-      API_KEY:
-        from_secret: api_key
-    commands:
-      - echo "=== Deployment Info ==="
-      - echo "Environment  = $environment"
-      - echo "Notify Slack = $notify_slack"
-      - echo ""
-      - echo "=== Secret Verification ==="
-      - echo "API_KEY length     = $(echo -n $API_KEY | wc -c)"
