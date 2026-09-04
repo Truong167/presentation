@@ -6,7 +6,7 @@ with:
   deploy_image: alpine:3.19
 
 params:
-  - name: type
+  - name: target
     type: select
     options:
       - fe
@@ -23,4 +23,4 @@ params:
 
 when:
   event: manual
-  evaluate: type == "be"
+  evaluate: target == "be"
