@@ -2,7 +2,7 @@ uses: .woodpecker/deploy.yml
 environment: staging
 with:
   component: app
-  validate_command: echo "Push-triggered validation Okla"
+  validate_command: echo "Push-triggered validation Ok"
   deploy_image: alpine:3.19
 
 when:
