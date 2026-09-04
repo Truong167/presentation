@@ -1,7 +1,0 @@
-uses: .woodpecker/deploy.yml
-with:
-  component: default-test
-  validate_command: echo "Testing default deploy_image"
-
-when:
-  event: manual
