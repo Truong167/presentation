@@ -1,0 +1,10 @@
+uses: .woodpecker/deploy.yml
+environment: staging
+with:
+  component: app
+  validate_command: echo "Push-triggered validation OK"
+  deploy_image: alpine:3.19
+
+when:
+  branch: feat/workflow
+  event: push

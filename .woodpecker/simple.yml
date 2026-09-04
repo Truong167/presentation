@@ -1,0 +1,10 @@
+when:
+  event: manual
+
+steps:
+  - name: hello
+    image: alpine:3.19
+    commands:
+      - echo "This is a simple workflow without template"
+      - echo "Event = ${CI_PIPELINE_EVENT}"
+      - echo "Repo  = ${CI_REPO}"
