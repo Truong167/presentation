@@ -1,39 +1,32 @@
 inputs:
+  component:
+    type: string
+    required: true
+    description: "Component name (fe or be)"
   validate_command:
     type: string
     required: true
     description: "Command to run during validation step"
-
-params:
-  - name: type
-    type: select
-    options:
-      - fe
-      - be
-  - name: environment
-    type: select
-    options:
-      - dev
-      - prod
-    default: dev
-
-  - name: notify_slack
-    type: boolean
-    default: "false"
+  deploy_image:
+    type: string
+    default: "alpine:3.19"
+    description: "Docker image for deploy step"
 
 steps:
   - name: validate
     image: node:20-alpine
     commands:
+      - echo "Validating ${inputs.component}..."
       - ${inputs.validate_command}
 
   - name: deploy
-    image: alpine:3.19
+    image: ${inputs.deploy_image}
     environment:
       API_KEY:
         from_secret: api_key
     commands:
       - echo "=== Deployment Info ==="
+      - echo "Component    = ${inputs.component}"
       - echo "Environment  = $environment"
       - echo "Notify Slack = $notify_slack"
       - echo ""

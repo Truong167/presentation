@@ -1,7 +1,25 @@
 uses: .woodpecker/deploy.yml
 environment: fe
 with:
-  validate_command: echo "Validating HTML files..." && test -f index.html && echo "index.html OK" || exit 1
+  component: fe
+  validate_command: test -f index.html && echo "index.html OK" || exit 1
+  deploy_image: node:20-alpine
+
+params:
+  - name: type
+    type: select
+    options:
+      - fe
+      - be
+  - name: environment
+    type: select
+    options:
+      - dev
+      - prod
+    default: dev
+  - name: notify_slack
+    type: boolean
+    default: "false"
 
 when:
   event: manual
