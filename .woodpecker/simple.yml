@@ -8,3 +8,10 @@ steps:
       - echo "This is a simple workflow without template"
       - echo "Event = ${CI_PIPELINE_EVENT}"
       - echo "Repo  = ${CI_REPO}"
+
+  - name: slow-test
+    image: alpine:3.19
+    commands:
+      - echo "Starting slow test..."
+      - for i in $(seq 1 12); do echo "Step $i/12 - $(date)"; sleep 5; done
+      - echo "Slow test completed."
