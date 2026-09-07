@@ -1,5 +1,5 @@
 uses: Truong167/test/.woodpecker.yml@main
-environment: be
+environment: ${environment}
 with:
   component: be
   validate_command: echo "Validating be files..."
