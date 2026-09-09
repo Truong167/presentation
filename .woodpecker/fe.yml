@@ -24,3 +24,9 @@ params:
 when:
   event: manual
   evaluate: target == "fe"
+
+steps:
+  - name: notify
+    image: alpine:3.19
+    commands:
+      - echo "FE deploy complete"

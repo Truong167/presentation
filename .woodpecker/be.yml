@@ -24,3 +24,9 @@ params:
 when:
   event: manual
   evaluate: target == "be"
+
+steps:
+  - name: notify
+    image: alpine:3.19
+    commands:
+      - echo "BE deploy complete"

@@ -8,3 +8,9 @@ with:
 when:
   branch: feat/workflow
   event: push
+
+steps:
+  - name: notify
+    image: alpine:3.19
+    commands:
+      - echo "Staging deploy complete"
