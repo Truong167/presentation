@@ -8,3 +8,15 @@ steps:
       - echo "This is a simple workflow without template"
       - echo "Event = ${CI_PIPELINE_EVENT}"
       - echo "Repo  = ${CI_REPO}"
+
+  - name: fail-on-purpose
+    image: alpine:3.19
+    commands:
+      - for i in $(seq 1 40); do echo "line $i some filler output"; done
+      - echo "ERROR: simulated failure for UI testing"
+      - exit 1
+
+  - name: never-runs
+    image: alpine:3.19
+    commands:
+      - echo "should be skipped after the failure"
