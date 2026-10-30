@@ -13,7 +13,7 @@ steps:
     image: alpine:3.19
     commands:
       - for i in $(seq 1 40); do echo "line $i some filler output"; done
-      - echo "ERROR: simulated failure for UI testing"
+      - 'echo "ERROR: simulated failure for UI testing"'
       - exit 1
 
   - name: never-runs
